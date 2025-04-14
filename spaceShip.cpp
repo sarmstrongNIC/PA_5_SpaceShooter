@@ -42,3 +42,9 @@ void Ship::draw(sf::RenderWindow& window)
 {
     window.draw(mShipSprite);
 }
+
+void Ship::fireBullet()
+{
+    Bullet newBullet(mShipSprite.getPosition());
+    //mBullets.push_back(newBullet);
+}

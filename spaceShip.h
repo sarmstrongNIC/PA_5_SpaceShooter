@@ -2,6 +2,9 @@
 #define SPACESHIP_H
 
 #include <SFML/Graphics.hpp>
+#include "bullet.h"
+#include <vector>
+
 
 class Ship
 {
@@ -21,8 +24,8 @@ private:
     float mIncrement;
     sf::Vector2u mWindowSize;
 
-    void shootShip();
-   
+    void fireBullet();
+    //std::vector<Bullet> mBullets;
 };
 
 #endif
