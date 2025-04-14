@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "spaceShip.h"
+#include "enemy.h"
 #include "bullet.h"
 
 class Game
