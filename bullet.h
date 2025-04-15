@@ -2,7 +2,6 @@
 #define BULLET_H
 
 #include <SFML/Graphics.hpp>
-#include "spaceShip.h"
 
 class Bullet
 {
@@ -10,9 +9,9 @@ public:
     Bullet(sf::Vector2f position);
     ~Bullet(){};
     void bulletMotion();
-    void updateBulletPosition();
+    bool updateBulletPosition(sf::Vector2u &mWindowSize);
     void drawBullet(sf::RenderWindow &window);
-    void getPosition();
+    sf::Vector2f getPosition();
 
 
 private:

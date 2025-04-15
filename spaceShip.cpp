@@ -1,6 +1,5 @@
 #include "spaceShip.h"
-#include "game.h"
-#include <iostream>
+
 //TODO: improve default constructor, investigate whether it is possible to remove
 Ship::Ship()
 {
@@ -27,7 +26,7 @@ Ship::Ship(const sf::Vector2u &windowsize)
 
 void Ship::moveShip()
 {
-    float speed = 5.f;
+    float speed = 40.f;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         if (mShipSprite.getPosition().x > 0)
             mShipSprite.move((mIncrement*-1), 0.f);
@@ -46,5 +45,43 @@ void Ship::draw(sf::RenderWindow& window)
 void Ship::fireBullet()
 {
     Bullet newBullet(mShipSprite.getPosition());
-    //mBullets.push_back(newBullet);
+    mBullets.push_back(newBullet);
+}
+
+void Ship::handleInput()
+{
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        if (mShotClock.getElapsedTime() > mShotCooldown)
+        {
+            fireBullet();
+            mShotClock.restart();
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        std::cout << "Bullets in air: " << mBullets.size() << "\n";
+        for (std::size_t i = 0; i < mBullets.size(); ++i) {
+            std::cout << "Bullet " << i << ": x = " 
+                      << mBullets[i].getPosition().x << ", y = "
+                      << mBullets[i].getPosition().y << "\n";
+        }
+    }
+    
+}
+
+void Ship::drawBullet(sf::RenderWindow &window)
+{
+    for (std::size_t i = 0; i < mBullets.size();)
+    {
+        mBullets[i].drawBullet(window);
+        if(!mBullets[i].updateBulletPosition(mWindowSize))
+        {
+            std::swap(mBullets[i], mBullets.back());
+            mBullets.pop_back();
+        }
+        else
+        {
+            ++i;
+        }
+    }
 }

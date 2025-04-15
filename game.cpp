@@ -20,6 +20,7 @@ void Game::handleInput()
         }
     }
     mPlayerSpaceShip.moveShip();
+    mPlayerSpaceShip.handleInput();
 }
 
 void Game::update()
@@ -33,6 +34,7 @@ void Game::render()
 {
     mWindow.clear(sf::Color::Black);
     mPlayerSpaceShip.draw(mWindow);
+    mPlayerSpaceShip.drawBullet(mWindow);
     mWindow.display();
 }
 
