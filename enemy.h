@@ -8,8 +8,8 @@ class Enemy
     public:
     Enemy(){spacing = 0;}
     Enemy(int sp){spacing = sp;};
-    void spawn(int count, sf::Vector2f()); //use spacing and argument to spawn ships in a row;
-
+    //use spacing and count to spawn ships in a row vector is origin point for row;
+    void spawn(int count, sf::Vector2f());
 
     private:
     int spacing;
@@ -20,9 +20,9 @@ class fighter:public Enemy
 {
     public:
     fighter(){health = 1;}
+    void fire();
     private:
     int health;
-    int count;
 };
 
 
