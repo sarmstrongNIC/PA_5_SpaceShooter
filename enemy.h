@@ -16,10 +16,10 @@ class Enemy
 
 };
 
-class fighter:public Enemy
+class Fighter:public Enemy
 {
     public:
-    fighter(){health = 1;}
+    Fighter():Enemy(4){health = 1;}
     void fire();
     private:
     int health;
