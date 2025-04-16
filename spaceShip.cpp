@@ -3,36 +3,37 @@
 //TODO: improve default constructor, investigate whether it is possible to remove
 Ship::Ship()
 {
-    mShipTextureTile.loadFromFile("galagaShip.jpg");
+    mShipTextureTile.loadFromFile("galagaShip_crop.png");
     mShipSprite.setTexture(mShipTextureTile);
-    mShipSprite.setOrigin(62.f / 2.f, 62.f / 2.f);
-    mShipSprite.setPosition(320.f, 400.f);
+    mShipSprite.setOrigin(209.f / 2.f, 241.f / 2.f);
+    mShipSprite.setPosition(320.f, 40.f);
     mIncrement = 5.0;
     std::cout << "default constructor called" << std::endl;
 }
 
 Ship::Ship(const sf::Vector2u &windowsize)
 {
-    mShipTextureTile.loadFromFile("galagaShip.jpg");
+    mShipTextureTile.loadFromFile("galagaShip_crop.png");
     mShipSprite.setTexture(mShipTextureTile);
     mWindowSize = windowsize;
     //TODO set rect around sprite
     //mHomeSprite.setTextureRect(sf::IntRect(64, 32, 62, 62));
-    mShipSprite.setOrigin(62.f / 2.f, 62.f / 2.f);
-    mShipSprite.setPosition(320.f, 400.f);
+    mShipSprite.setOrigin(209.f/2.f, 241.f/2.f);
+    mShipSprite.setPosition(320.f, 600.f);
     mIncrement = 5.0;
 }
 
 
 void Ship::moveShip()
 {
+    //TODO remove magic #s for screen edge detection
     float speed = 40.f;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if (mShipSprite.getPosition().x > 0)
+        if (mShipSprite.getPosition().x - (209.0/2)> 0)
             mShipSprite.move((mIncrement*-1), 0.f);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        if (mShipSprite.getPosition().x < mWindowSize.x)
+        if (mShipSprite.getPosition().x + (209.0/2) < mWindowSize.x)
             mShipSprite.move(mIncrement, 0.f);
     }
 }

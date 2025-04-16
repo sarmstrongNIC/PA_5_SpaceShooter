@@ -26,7 +26,4 @@ class fighter:public Enemy
 };
 
 
-
-
-
 #endif

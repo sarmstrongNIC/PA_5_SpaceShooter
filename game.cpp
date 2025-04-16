@@ -1,7 +1,7 @@
 #include "game.h"
 #include <iostream>
 
-Game::Game() : mWindow(sf::VideoMode(1640, 1480), "SpaceShooters"), mPlayerSpaceShip(mWindow.getSize())
+Game::Game() : mWindow(sf::VideoMode(1000, 800), "SpaceShooters"), mPlayerSpaceShip(mWindow.getSize())
 {
     Ship mPlayerSpaceShip(mWindow.getSize());
     //Enemy mEnemyInitial
