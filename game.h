@@ -22,6 +22,7 @@ private:
     sf::RenderWindow mWindow;
     Ship mPlayerSpaceShip;
     bool mIsDone;
+    int mScore;
 };
 
 #endif

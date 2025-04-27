@@ -5,6 +5,7 @@ Game::Game() : mWindow(sf::VideoMode(1000, 800), "SpaceShooters"), mPlayerSpaceS
 {
     Ship mPlayerSpaceShip(mWindow.getSize());
     //Enemy mEnemyInitial
+    mScore = 0;
     mIsDone = false;
 }
 

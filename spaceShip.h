@@ -28,6 +28,7 @@ private:
     sf::Vector2u mWindowSize;
     sf::Clock mShotClock;
     sf::Time mShotCooldown = sf::seconds(0.25f);
+    int mLives;
 
     void fireBullet();
     

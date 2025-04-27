@@ -8,6 +8,7 @@ Ship::Ship()
     mShipSprite.setOrigin(209.f / 2.f, 241.f / 2.f);
     mShipSprite.setPosition(320.f, 40.f);
     mIncrement = 5.0;
+    mLives = 3;
     std::cout << "default constructor called" << std::endl;
 }
 
@@ -21,6 +22,7 @@ Ship::Ship(const sf::Vector2u &windowsize)
     mShipSprite.setOrigin(209.f/2.f, 241.f/2.f);
     mShipSprite.setPosition(320.f, 600.f);
     mIncrement = 5.0;
+    mLives = 3;
 }
 
 

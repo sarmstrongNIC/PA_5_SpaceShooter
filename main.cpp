@@ -22,7 +22,9 @@ int main()
 //populate enemies
     //EnemyBullet Class?
 //Main menu
-//Track points and high scores
+//Display remaining lives on main screen
+//Display current score on main screen
+//
 //Handle re-spawn, track lives
 //ship pixel width = 209, height =241
 //handle window resizing well.
