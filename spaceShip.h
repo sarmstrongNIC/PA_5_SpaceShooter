@@ -18,7 +18,8 @@ public:
     void moveShip();
     void handleInput();
     void drawBullet(sf::RenderWindow &window);
-    void updateBullets();
+    bool checkCollision(Bullet& bullet);
+
 
 private:
 
@@ -29,6 +30,8 @@ private:
     sf::Clock mShotClock;
     sf::Time mShotCooldown = sf::seconds(0.25f);
     int mLives;
+    sf::FloatRect mShipBoundingBox;
+    
 
     void fireBullet();
     

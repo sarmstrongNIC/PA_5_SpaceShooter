@@ -6,12 +6,12 @@
 class Bullet
 {
 public:
-    Bullet(sf::Vector2f position);
+    Bullet(sf::Vector2f position, bool enemy);
     ~Bullet(){};
-    void bulletMotion();
     bool updateBulletPosition(sf::Vector2u &mWindowSize);
     void drawBullet(sf::RenderWindow &window);
     sf::Vector2f getPosition();
+    sf::FloatRect getBoundingBox();
 
 
 private:
@@ -20,7 +20,7 @@ private:
 sf::RectangleShape mBulletShape;
 float mSpeed;
 bool mBulletActive; //active until hit or off screen
-
+bool mEnemyBullet;
 
    
 };
