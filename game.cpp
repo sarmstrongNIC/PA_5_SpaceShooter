@@ -30,10 +30,22 @@ void Game::update()
 {
     for(std::size_t i = 0; i < mEnemy.enemyBullets.size(); i++)
     {
-        bool colission = mPlayerSpaceShip.checkCollision(mEnemy.enemyBullets[i]);
-        if(colission)
+        bool userHit = mPlayerSpaceShip.checkCollision(mEnemy.enemyBullets[i]);
+        if(userHit)
         {
+            std::swap(mEnemy.enemyBullets[i], mEnemy.enemyBullets.back());
+            mEnemy.enemyBullets.pop_back();
             std::cout << "SPACESHIP HIT" << std::endl;
+        }
+    }
+    for(std::size_t i = 0; i < mPlayerSpaceShip.mBullets.size(); i++)
+    {
+        bool enemyHit = mEnemy.checkCollision(mPlayerSpaceShip.mBullets[i]);
+        if(enemyHit)
+        {
+            std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
+            mPlayerSpaceShip.mBullets.pop_back();
+            std::cout << "ENEMY HIT" << std::endl;
         }
     }
 }

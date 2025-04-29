@@ -40,7 +40,7 @@ bool Bullet::updateBulletPosition(sf::Vector2u &mWindowSize)
     else
     {
         mBulletShape.move(0.f,10.f);//consider making this speed a CONST
-        if(getPosition().y < 0.f)
+        if(getPosition().y > mWindowSize.y)
         {
             mBulletActive = false;
         }

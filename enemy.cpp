@@ -7,6 +7,7 @@ Enemy::Enemy(const sf::Vector2u &windowSize)
     mEnemySprite.setPosition(windowSize.x / 2.f, 100.f);
     mWindowSize = windowSize;
     std::cout << "Enemy constructor called" << std::endl;
+    mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
 }
 
 
@@ -50,6 +51,11 @@ void Enemy::drawBullet(sf::RenderWindow &window)
             ++i;
         }
     }
+}
+
+bool Enemy::checkCollision(Bullet& bullet)
+{
+    return mEnemyBoundingBox.intersects(bullet.getBoundingBox());
 }
 
 void Fighter::fire()

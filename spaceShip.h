@@ -19,7 +19,7 @@ public:
     void handleInput();
     void drawBullet(sf::RenderWindow &window);
     bool checkCollision(Bullet& bullet);
-
+    std::vector<Bullet> mBullets;
 
 private:
 
@@ -35,7 +35,7 @@ private:
 
     void fireBullet();
     
-    std::vector<Bullet> mBullets;
+    
 };
 
 #endif

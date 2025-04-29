@@ -18,11 +18,13 @@ class Enemy
     void drawBullet(sf::RenderWindow &window);
     void handleInput();
     std::vector<Bullet> enemyBullets;
+    bool checkCollision(Bullet& bullet);
     
+
     private:
     int spacing;
     sf::RectangleShape mEnemySprite;//TODO, create proper sprite
-    
+    sf::FloatRect mEnemyBoundingBox;
     sf::Vector2u mWindowSize;
 
 
