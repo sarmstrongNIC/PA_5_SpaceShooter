@@ -4,7 +4,5 @@
 
 
 
-void Fighter::fire()
-{
-    
-}
+
+

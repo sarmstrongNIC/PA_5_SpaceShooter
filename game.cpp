@@ -42,3 +42,11 @@ bool Game::isDone() const
 {
     return (!mWindow.isOpen() || mIsDone);
 }
+
+
+void Game::spawnFighter(int count, sf::Vector2f(), std::vector<Fighter> *&f)
+{
+    //fighters spawn left to right
+    //check if spacing will go outside of window
+    //create new objects using count to loop
+}
