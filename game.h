@@ -24,7 +24,9 @@ private:
     sf::Texture mHomeTextureTile;
     sf::RenderWindow mWindow;
     Ship mPlayerSpaceShip;
+    Enemy mEnemy;
     bool mIsDone;
+    int mScore;
 };
 
 #endif

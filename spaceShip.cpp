@@ -8,6 +8,8 @@ Ship::Ship()
     mShipSprite.setOrigin(209.f / 2.f, 241.f / 2.f);
     mShipSprite.setPosition(320.f, 40.f);
     mIncrement = 5.0;
+    mLives = 3;
+    mShipBoundingBox = mShipSprite.getGlobalBounds();
     std::cout << "default constructor called" << std::endl;
 }
 
@@ -21,6 +23,8 @@ Ship::Ship(const sf::Vector2u &windowsize)
     mShipSprite.setOrigin(209.f/2.f, 241.f/2.f);
     mShipSprite.setPosition(320.f, 600.f);
     mIncrement = 5.0;
+    mLives = 3;
+    mShipBoundingBox = mShipSprite.getGlobalBounds();
 }
 
 
@@ -36,6 +40,7 @@ void Ship::moveShip()
         if (mShipSprite.getPosition().x + (209.0/2) < mWindowSize.x)
             mShipSprite.move(mIncrement, 0.f);
     }
+    mShipBoundingBox = mShipSprite.getGlobalBounds();
 }
 
 void Ship::draw(sf::RenderWindow& window)
@@ -45,7 +50,7 @@ void Ship::draw(sf::RenderWindow& window)
 
 void Ship::fireBullet()
 {
-    Bullet newBullet(mShipSprite.getPosition());
+    Bullet newBullet(mShipSprite.getPosition(), false);
     mBullets.push_back(newBullet);
 }
 
@@ -85,4 +90,17 @@ void Ship::drawBullet(sf::RenderWindow &window)
             ++i;
         }
     }
+}
+
+bool Ship::checkCollision(Bullet& bullet)
+{
+    
+        // std::cout << "Collision check Bullet: x = " 
+        //           << bullet.getPosition().x << ", y = "
+        //           << bullet.getPosition().y << "\n";
+        // std::cout << "Ship position: x = " 
+        //           << mShipBoundingBox.left << ", y = "
+        //           << mShipBoundingBox.top << "\n";
+
+    return mShipBoundingBox.intersects(bullet.getBoundingBox());
 }
