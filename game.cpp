@@ -69,9 +69,22 @@ bool Game::isDone() const
 }
 
 
-void Game::spawnFighter(int count, sf::Vector2f(), std::vector<Fighter> *&f)
+void Game::spawnFighters(int count, sf::Vector2u position)
 {
     //fighters spawn left to right
+    for(int i = 0; i < count; i++)
+    {
     //check if spacing will go outside of window
+        if(position.x > mWindow.getSize().x)
+        {
+            break;
+        }
     //create new objects using count to loop
+        else
+        {
+            Enemy *temp = new Enemy(position);
+            mFighters.push_back(temp);
+            position.x +=40;
+        }
+    }
 }

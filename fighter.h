@@ -10,7 +10,7 @@ class Fighter:public Enemy
     void fire();
     private:
     int health;
-    sf::CircleShape mEnemy;
+    sf::CircleShape mFighter;
 };
 
 

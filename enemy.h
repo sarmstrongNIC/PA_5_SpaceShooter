@@ -8,8 +8,6 @@
 class Enemy
 {
     public:
-    Enemy(){spacing = 0;}
-    Enemy(int sp){spacing = sp;};
     Enemy(const sf::Vector2u &windowsize);
     //use spacing and count to spawn ships in a row vector is origin point for row;
     void spawn(int count, sf::Vector2f());
@@ -22,7 +20,6 @@ class Enemy
     
 
     private:
-    int spacing;
     sf::RectangleShape mEnemySprite;//TODO, create proper sprite
     sf::FloatRect mEnemyBoundingBox;
     sf::Vector2u mWindowSize;

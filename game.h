@@ -18,13 +18,14 @@ public:
     void update();
     void render();
     bool isDone() const;
-    void spawnFighter(int count, sf::Vector2f(), std::vector<Fighter> *&f);
+    void spawnFighters(int count, sf::Vector2u position);
 
 private:
     sf::Texture mHomeTextureTile;
     sf::RenderWindow mWindow;
     Ship mPlayerSpaceShip;
     Enemy mEnemy;
+    std::vector<Enemy*> mFighters;
     bool mIsDone;
     int mScore;
 };
