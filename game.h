@@ -5,20 +5,19 @@
 #include "spaceShip.h"
 #include "enemy.h"
 #include "bullet.h"
-
-
-
+#include "mainMenu.h"
 
 class Game
 {
 public:
-    Game();
+    Game(sf::RenderWindow &window);
     ~Game(){};
 
-    void handleInput();
-    void update();
-    void render();
-    bool isDone() const;
+    void handleInput(sf::RenderWindow &window);
+    void update(sf::RenderWindow &window);
+    void render(sf::RenderWindow &window);
+    bool isDone(sf::RenderWindow &window) const;
+    void displayMainMenu(sf::RenderWindow &window);
     sf::Font mFont;
     sf::Text mLivesText;
     sf::Text mGameOverText;
@@ -32,6 +31,8 @@ private:
     bool mIsDone;
     int mScore;
     bool mGameOver;
+    MainMenu mMenu;
+    int selectedMenuItem = 0;
 };
 
 #endif

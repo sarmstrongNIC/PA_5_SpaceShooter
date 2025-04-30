@@ -1,16 +1,26 @@
 #include "game.h"
+#include <iostream>
 
 
 int main()
 {
+    sf::RenderWindow window(sf::VideoMode(1000, 800), "SpaceShooters");
 
-    Game game;
-
-    while(!game.isDone())
+    Game game(window);
+    int menuChoice = -1;
+    while(menuChoice < 0 || menuChoice > 4)
     {
-        game.handleInput();
-        game.update();
-        game.render();
+        game.displayMainMenu(window);
+        // std::cout << "Enter Menu Choice: " << std::endl;
+        // std::cin >> menuChoice;
+    }
+    
+
+    while(!game.isDone(window))
+    {
+        game.handleInput(window);
+        game.update(window);
+        game.render(window);
     }
 
     return 0;

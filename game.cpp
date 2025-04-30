@@ -1,7 +1,7 @@
 #include "game.h"
 #include <iostream>
 
-Game::Game() : mWindow(sf::VideoMode(1000, 800), "SpaceShooters"), mPlayerSpaceShip(mWindow.getSize()), mEnemy(mWindow.getSize())
+Game::Game(sf::RenderWindow &window) : mPlayerSpaceShip(window.getSize()), mEnemy(window.getSize()), mMenu(window)
 {
 
     if (!mFont.loadFromFile("game_over.ttf"))
@@ -11,22 +11,22 @@ Game::Game() : mWindow(sf::VideoMode(1000, 800), "SpaceShooters"), mPlayerSpaceS
     mLivesText.setFont(mFont);
     mLivesText.setCharacterSize(50);
     mLivesText.setFillColor(sf::Color::White);
-    mLivesText.setPosition(10.f, mWindow.getSize().y - 90.f);
+    mLivesText.setPosition(10.f, window.getSize().y - 90.f);
     //Enemy mEnemyInitial
     mScore = 0;
     mIsDone = false;
     mGameOver = false;
 }
 
-void Game::handleInput()
+void Game::handleInput(sf::RenderWindow &window)
 {
     sf::Event event;
-    while(mWindow.pollEvent(event))
+    while(window.pollEvent(event))
     {
         if(event.type == sf::Event::Closed)
         {
             // Close window button clicked.
-            mWindow.close();
+            window.close();
         }
     }
     mPlayerSpaceShip.moveShip();
@@ -34,7 +34,7 @@ void Game::handleInput()
     mEnemy.handleInput();
 }
 
-void Game::update()
+void Game::update(sf::RenderWindow &window)
 {
     if(mPlayerSpaceShip.mLives == 0 && mGameOver == false)
     {
@@ -45,7 +45,7 @@ void Game::update()
         mGameOverText.setFont(mFont);
         mGameOverText.setCharacterSize(250);
         mGameOverText.setFillColor(sf::Color::White);
-        mGameOverText.setPosition(mWindow.getSize().x/2 - 275, mWindow.getSize().y/2 - 250);
+        mGameOverText.setPosition(window.getSize().x/2 - 275, window.getSize().y/2 - 250);
         mGameOverText.setString("GAME OVER");
         
     }
@@ -79,22 +79,69 @@ void Game::update()
 
 
 //friend for spaceship and enemy draw?
-void Game::render()
+void Game::render(sf::RenderWindow &window)
 {
-    mWindow.clear(sf::Color::Black);
-    mEnemy.draw(mWindow);
-    mEnemy.drawBullet(mWindow);
-    mPlayerSpaceShip.draw(mWindow);
-    mPlayerSpaceShip.drawBullet(mWindow);
-    mWindow.draw(mLivesText);
+    window.clear(sf::Color::Black);
+    mEnemy.draw(window);
+    mEnemy.drawBullet(window);
+    mPlayerSpaceShip.draw(window);
+    mPlayerSpaceShip.drawBullet(window);
+    window.draw(mLivesText);
     if(mGameOver)
     {
-        mWindow.draw(mGameOverText);
+        window.draw(mGameOverText);
     }
-    mWindow.display();
+    window.display();
 }
 
-bool Game::isDone() const
+bool Game::isDone(sf::RenderWindow &window) const
 {
-    return (!mWindow.isOpen() || mIsDone);
+    return (!window.isOpen() || mIsDone);
+}
+
+void Game::displayMainMenu(sf::RenderWindow &window)
+{
+    
+    mMenu.display(window);
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+            window.close();
+            
+
+        if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::Up)
+            {
+                std::cout << "Up key pressed" << std::endl;
+                if(selectedMenuItem == 0)
+                {
+                    selectedMenuItem = 3;
+                }
+                else
+                {
+                    selectedMenuItem--;
+                }
+                std::cout << "selectedMenuItem = " << selectedMenuItem << std::endl;
+
+            }
+            else if (event.key.code == sf::Keyboard::Down)
+            {
+                std::cout << "Down key pressed" << std::endl;
+                if(selectedMenuItem == 3)
+                {
+                    selectedMenuItem = 0;
+                }
+                else
+                {
+                    selectedMenuItem++;
+                }
+                std::cout << "selectedMenuItem = " << selectedMenuItem << std::endl;
+            }
+                
+            else if (event.key.code == sf::Keyboard::Enter)
+                std::cout << "Enter key pressed" << std::endl;
+        }
+    }
 }
