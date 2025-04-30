@@ -20,7 +20,8 @@ public:
     void drawBullet(sf::RenderWindow &window);
     bool checkCollision(Bullet& bullet);
     std::vector<Bullet> mBullets;
-
+    int mLives;
+    
 private:
 
     sf::Texture mShipTextureTile;
@@ -29,7 +30,7 @@ private:
     sf::Vector2u mWindowSize;
     sf::Clock mShotClock;
     sf::Time mShotCooldown = sf::seconds(0.25f);
-    int mLives;
+    
     sf::FloatRect mShipBoundingBox;
     
 

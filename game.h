@@ -6,12 +6,12 @@
 #include "spaceShip.h"
 #include "enemy.h"
 #include "bullet.h"
-#include "fighter.h"
+#include "mainMenu.h"
 
 class Game
 {
 public:
-    Game();
+    Game(sf::RenderWindow &window);
     ~Game(){};
 
     void handleInput();
@@ -19,6 +19,15 @@ public:
     void render();
     bool isDone() const;
     void spawnFighters(int count, sf::Vector2u position);
+    void handleInput(sf::RenderWindow &window);
+    void update(sf::RenderWindow &window);
+    void render(sf::RenderWindow &window);
+    bool isDone(sf::RenderWindow &window) const;
+    int displayMainMenu(sf::RenderWindow &window);
+    sf::Font mFont;
+    sf::Text mLivesText;
+    sf::Text mGameOverText;
+
 
 private:
     sf::Texture mHomeTextureTile;
@@ -28,6 +37,9 @@ private:
     std::vector<Enemy*> mFighters;
     bool mIsDone;
     int mScore;
+    bool mGameOver;
+    MainMenu mMenu;
+    int selectedMenuItem = 0;
 };
 
 #endif
