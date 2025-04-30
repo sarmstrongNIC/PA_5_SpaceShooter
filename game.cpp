@@ -99,7 +99,7 @@ bool Game::isDone(sf::RenderWindow &window) const
     return (!window.isOpen() || mIsDone);
 }
 
-void Game::displayMainMenu(sf::RenderWindow &window)
+int Game::displayMainMenu(sf::RenderWindow &window)
 {
     
     mMenu.display(window);
@@ -141,7 +141,31 @@ void Game::displayMainMenu(sf::RenderWindow &window)
             }
                 
             else if (event.key.code == sf::Keyboard::Enter)
+            {
                 std::cout << "Enter key pressed" << std::endl;
+                if(selectedMenuItem == 0)
+                {
+                    return 1;
+                    //play game
+                }
+                else if(selectedMenuItem == 1)
+                {
+                    return 2;
+                    //display instructions
+                }
+                else if(selectedMenuItem == 2)
+                {
+                    return 3;
+                    //display high score
+                }
+                else if(selectedMenuItem == 3)
+                {
+                    return 4;
+                    //exit
+                }
+            }
+
         }
     }
+    return -1;
 }

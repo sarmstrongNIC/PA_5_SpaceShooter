@@ -17,7 +17,7 @@ public:
     void update(sf::RenderWindow &window);
     void render(sf::RenderWindow &window);
     bool isDone(sf::RenderWindow &window) const;
-    void displayMainMenu(sf::RenderWindow &window);
+    int displayMainMenu(sf::RenderWindow &window);
     sf::Font mFont;
     sf::Text mLivesText;
     sf::Text mGameOverText;

@@ -8,16 +8,16 @@ int main()
 
     Game game(window);
     int menuChoice = -1;
-    while(menuChoice < 0 || menuChoice > 4)
-    {
-        game.displayMainMenu(window);
-        // std::cout << "Enter Menu Choice: " << std::endl;
-        // std::cin >> menuChoice;
-    }
-    
 
     while(!game.isDone(window))
     {
+        while(menuChoice < 0 || menuChoice > 4)
+        {
+            menuChoice = game.displayMainMenu(window);
+            // std::cout << "Enter Menu Choice: " << std::endl;
+            // std::cin >> menuChoice;
+        }
+  
         game.handleInput(window);
         game.update(window);
         game.render(window);
@@ -72,3 +72,4 @@ int main()
 
 //BUGS
     ////Bullet hit counts as hit when it crosses bounding box but misses ship (top corners)
+    //at main menu, game doesnt exit when window is closed
