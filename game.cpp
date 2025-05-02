@@ -94,7 +94,7 @@ void Game::render(sf::RenderWindow &window)
     window.display();
 }
 
-bool Game::isDone(sf::RenderWindow &window) const
+bool Game::isDone(sf::RenderWindow &window) 
 {
     return (!window.isOpen() || mIsDone);
 }
@@ -117,6 +117,7 @@ int Game::displayMainMenu(sf::RenderWindow &window)
                 std::cout << "Up key pressed" << std::endl;
                 if(selectedMenuItem == 0)
                 {
+                    
                     selectedMenuItem = 3;
                 }
                 else
@@ -140,27 +141,27 @@ int Game::displayMainMenu(sf::RenderWindow &window)
                 std::cout << "selectedMenuItem = " << selectedMenuItem << std::endl;
             }
                 
-            else if (event.key.code == sf::Keyboard::Enter)
+            else if (event.key.code == sf::Keyboard::A)
             {
                 std::cout << "Enter key pressed" << std::endl;
                 if(selectedMenuItem == 0)
                 {
-                    return 1;
+                    return 0;
                     //play game
                 }
                 else if(selectedMenuItem == 1)
                 {
-                    return 2;
+                    return 1;
                     //display instructions
                 }
                 else if(selectedMenuItem == 2)
                 {
-                    return 3;
+                    return 2;
                     //display high score
                 }
                 else if(selectedMenuItem == 3)
                 {
-                    return 4;
+                    return 3;
                     //exit
                 }
             }
@@ -168,4 +169,14 @@ int Game::displayMainMenu(sf::RenderWindow &window)
         }
     }
     return -1;
+}
+
+void Game::setGameDone()
+{
+    mIsDone = true;
+}
+
+int Game::getSelectedMenuItem()
+{
+    return selectedMenuItem;
 }

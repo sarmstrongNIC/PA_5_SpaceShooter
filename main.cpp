@@ -4,23 +4,52 @@
 
 int main()
 {
+    
     sf::RenderWindow window(sf::VideoMode(1000, 800), "SpaceShooters");
-
     Game game(window);
     int menuChoice = -1;
+    int menuHighlight = -1;
+    sf::Event event;
+    
+    while (window.pollEvent(event)){}
 
     while(!game.isDone(window))
     {
         while(menuChoice < 0 || menuChoice > 4)
         {
             menuChoice = game.displayMainMenu(window);
+            menuHighlight = game.getSelectedMenuItem();
             // std::cout << "Enter Menu Choice: " << std::endl;
             // std::cin >> menuChoice;
+            //std::cout << "MenuHighlight is: " << menuHighlight << std::endl;
+            game.mMenu.setColor(menuHighlight);
+
         }
-  
-        game.handleInput(window);
-        game.update(window);
-        game.render(window);
+        if (menuChoice == 0)
+        {
+            game.mMenu.setColor(menuChoice);
+            game.handleInput(window);
+            game.update(window);
+            game.render(window);
+        }
+        else if(menuChoice == 1)
+        {
+            //game.mMenu.setColor(menuChoice);
+            //display instructions
+        }
+        else if(menuChoice == 2)
+        {
+            //game.mMenu.setColor(menuChoice);
+            //display high scores
+        }
+        else if(menuChoice == 3)
+        {
+            //game.mMenu.setColor(menuChoice);
+            //exit
+            std::cout << "game done selected " << std::endl; 
+            game.setGameDone();
+        }
+        
     }
 
     return 0;

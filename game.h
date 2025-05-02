@@ -16,12 +16,14 @@ public:
     void handleInput(sf::RenderWindow &window);
     void update(sf::RenderWindow &window);
     void render(sf::RenderWindow &window);
-    bool isDone(sf::RenderWindow &window) const;
+    bool isDone(sf::RenderWindow &window);
     int displayMainMenu(sf::RenderWindow &window);
+    int getSelectedMenuItem();
+    void setGameDone();
     sf::Font mFont;
     sf::Text mLivesText;
     sf::Text mGameOverText;
-
+    MainMenu mMenu;
 
 private:
     sf::Texture mHomeTextureTile;
@@ -31,7 +33,7 @@ private:
     bool mIsDone;
     int mScore;
     bool mGameOver;
-    MainMenu mMenu;
+    
     int selectedMenuItem = 0;
 };
 

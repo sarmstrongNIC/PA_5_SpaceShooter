@@ -4,6 +4,8 @@
 
 MainMenu::MainMenu(sf::RenderWindow &window)
 {
+    std::cout << "MainMenu Constructor Called " << std::endl;
+
     if (!mFont.loadFromFile("game_over.ttf"))
     {
         std::cout << "Error loading font" << std::endl;
@@ -47,4 +49,30 @@ void MainMenu::display(sf::RenderWindow &window)
 bool MainMenu::handleInput(sf::RenderWindow &window)
 {
     return false;
+}
+
+void MainMenu::setColor(int i)
+{
+    mPlayText.setFillColor(sf::Color::White);
+    mInstructionsText.setFillColor(sf::Color::White);
+    mHighScoresText.setFillColor(sf::Color::White);
+    mExitText.setFillColor(sf::Color::White);
+
+    if(i == 0)
+    {
+        //std::cout << "setColor is called " << std::endl; 
+        mPlayText.setFillColor(sf::Color::Red);
+    }
+    else if(i == 1)
+    {
+        mInstructionsText.setFillColor(sf::Color::Red);
+    }
+    else if(i == 2)
+    {
+        mHighScoresText.setFillColor(sf::Color::Red);
+    }
+    else if(i == 3)
+    {
+        mExitText.setFillColor(sf::Color::Red);
+    }
 }
