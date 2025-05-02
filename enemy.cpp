@@ -58,7 +58,5 @@ bool Enemy::checkCollision(Bullet& bullet)
     return mEnemyBoundingBox.intersects(bullet.getBoundingBox());
 }
 
-void Fighter::fire()
-{
-    
-}
+
+
