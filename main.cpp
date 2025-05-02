@@ -59,8 +59,14 @@ int main()
 
 //TODO
 
-//populate enemies
 
+//Sam Next:
+    //capture high score
+    //Prompt to play again or return to main menu upon Game Over
+    //Instructions Page
+        //Return to main menu
+
+//populate enemies
 //Main menu start screen
 //Display current score on main screen
 //User not affected by bullets for 3 seconds during respawn
@@ -98,6 +104,7 @@ int main()
 //when out of lives        
     //display game over screen
 //decrement lives when hit   
+//Display score during game
 
 //BUGS
     ////Bullet hit counts as hit when it crosses bounding box but misses ship (top corners)

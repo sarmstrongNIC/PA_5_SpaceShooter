@@ -56,7 +56,7 @@ void Ship::fireBullet()
 
 void Ship::handleInput()
 {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && mLives > 0)
     {
         if (mShotClock.getElapsedTime() > mShotCooldown)
         {

@@ -29,6 +29,7 @@ public:
     sf::Font mFont;
     sf::Text mLivesText;
     sf::Text mGameOverText;
+    sf::Text mScoreText;
     MainMenu mMenu;
 
 private:
@@ -39,6 +40,7 @@ private:
     std::vector<Enemy*> mFighters;
     bool mIsDone;
     int mScore;
+    int mHighScore;
     bool mGameOver;
     
     int selectedMenuItem = 0;

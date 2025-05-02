@@ -12,8 +12,15 @@ Game::Game(sf::RenderWindow &window) : mPlayerSpaceShip(window.getSize()), mEnem
     mLivesText.setCharacterSize(50);
     mLivesText.setFillColor(sf::Color::White);
     mLivesText.setPosition(10.f, window.getSize().y - 90.f);
+
+    mScoreText.setFont(mFont);
+    mScoreText.setCharacterSize(80);
+    mScoreText.setFillColor(sf::Color::White);
+    mScoreText.setPosition(10.f, 0.f);
+
     //Enemy mEnemyInitial
     mScore = 0;
+    mHighScore = 0;
     mIsDone = false;
     mGameOver = false;
 }
@@ -40,6 +47,10 @@ void Game::update(sf::RenderWindow &window)
     {
         std::cout << "GAME OVER" << std::endl;
         mGameOver = true;
+        if(mScore > mHighScore)
+        {
+            mHighScore = mScore;
+        }
         //display game over screen
         //pop up displaying score and asking to play again
         mGameOverText.setFont(mFont);
@@ -47,6 +58,7 @@ void Game::update(sf::RenderWindow &window)
         mGameOverText.setFillColor(sf::Color::White);
         mGameOverText.setPosition(window.getSize().x/2 - 275, window.getSize().y/2 - 250);
         mGameOverText.setString("GAME OVER");
+
         
     }
     for(std::size_t i = 0; i < mEnemy.enemyBullets.size(); i++)
@@ -72,8 +84,11 @@ void Game::update(sf::RenderWindow &window)
             std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
             mPlayerSpaceShip.mBullets.pop_back();
             std::cout << "ENEMY HIT" << std::endl;
+            mScore+=100;
+            std::cout << "Score: " << mScore << std::endl;
         }
     }
+    mScoreText.setString("Score: " + std::to_string(mScore));
     mLivesText.setString("Lives Remaining: " + std::to_string(mPlayerSpaceShip.mLives));
 }
 
@@ -87,6 +102,7 @@ void Game::render(sf::RenderWindow &window)
     mPlayerSpaceShip.draw(window);
     mPlayerSpaceShip.drawBullet(window);
     window.draw(mLivesText);
+    window.draw(mScoreText);
     if(mGameOver)
     {
         window.draw(mGameOverText);
@@ -199,4 +215,4 @@ void Game::setGameDone()
 int Game::getSelectedMenuItem()
 {
     return selectedMenuItem;
-}
+};
