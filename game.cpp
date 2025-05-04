@@ -145,10 +145,17 @@ void Game::update(sf::RenderWindow &window)
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mPlayAgain == true)
         {
             std::cout << "Play again selected" << std::endl;
+            mGameOver = false;
+            mPlayerSpaceShip.mLives = 3;
+            mScore = 0;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mPlayAgain == false)
         {
             std::cout << "Decline play again" << std::endl;
+            returnMainMenu = true;
+            mGameOver = false;
+            mPlayerSpaceShip.mLives = 3;
+            mScore = 0;
         }
     }
 }
@@ -280,3 +287,74 @@ int Game::getSelectedMenuItem()
 {
     return selectedMenuItem;
 };
+
+
+bool Game::displayInstructions(sf::RenderWindow &window)
+{
+    mMenu.displayInstructions(window);
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+        {
+            window.close();
+        }
+        if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::Up)
+            {
+                std::cout << "Up key pressed" << std::endl;
+                if(selectedMenuItem == 0)
+                {
+                    selectedMenuItem = 3;
+                }
+                else
+                {
+                    selectedMenuItem--;
+                }
+                std::cout << "selectedMenuItem = " << selectedMenuItem << std::endl;
+            }
+
+            else if (event.key.code == sf::Keyboard::Down)
+            {
+                std::cout << "Down key pressed" << std::endl;
+                if(selectedMenuItem == 3)
+                {
+                    selectedMenuItem = 0;
+                }
+                else
+                {
+                    selectedMenuItem++;
+                }
+                std::cout << "selectedMenuItem = " << selectedMenuItem << std::endl;
+            }
+                
+            else if (event.key.code == sf::Keyboard::A)
+            {
+                std::cout << "Enter key pressed" << std::endl;
+                if(selectedMenuItem == 0)
+                {
+                    return 0;
+                    //play game
+                }
+                else if(selectedMenuItem == 1)
+                {
+                    return 1;
+                    //display instructions
+                }
+                else if(selectedMenuItem == 2)
+                {
+                    return 2;
+                    //display high score
+                }
+                else if(selectedMenuItem == 3)
+                {
+                    return 3;
+                    //exit
+                }
+            }
+
+        }
+    }
+    return -1;
+}

@@ -21,8 +21,10 @@ public:
     void render(sf::RenderWindow &window);
     bool isDone(sf::RenderWindow &window);
     int displayMainMenu(sf::RenderWindow &window);
+    bool displayInstructions(sf::RenderWindow &window);
     int getSelectedMenuItem();
     void setGameDone();
+    bool returnMainMenu = false;
     sf::Font mFont;
     sf::Text mLivesText;
     sf::Text mGameOverText;

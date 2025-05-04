@@ -9,6 +9,7 @@ int main()
     Game game(window);
     int menuChoice = -1;
     int menuHighlight = -1;
+    bool returnToMain = false;
     sf::Event event;
     
     while (window.pollEvent(event)){}
@@ -17,6 +18,7 @@ int main()
     {
         while(menuChoice < 0 || menuChoice > 4)
         {
+            game.returnMainMenu = false;
             menuChoice = game.displayMainMenu(window);
             menuHighlight = game.getSelectedMenuItem();
             // std::cout << "Enter Menu Choice: " << std::endl;
@@ -31,13 +33,20 @@ int main()
             game.handleInput(window);
             game.update(window);
             game.render(window);
+            if(game.returnMainMenu)
+            {
+                menuChoice = -1;
+            }
         }
         else if(menuChoice == 1)
         {
-            //game.mMenu.setColor(menuChoice);
-            //display instructions
+            game.displayInstructions(window);
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            {
+                menuChoice = -1;
+            }
         }
-        else if(menuChoice == 2)
+        else if(menuChoice == 2) 
         {
             //game.mMenu.setColor(menuChoice);
             //display high scores
@@ -61,23 +70,13 @@ int main()
 
 
 //Sam Next:
-    //Prompt to play again or return to main menu upon Game Over
-        //Delay 3 seconds
-        //Prompt Play again
-    //Instructions Page
-        //Return to main menu
+    //Bug -- window X at main menu doesn't close program
     //capture high score
-
-
+    //
 
 
 //enemy destroyed and disappears when hit
-//Handle re-spawn
-//when out of lives        
-    //pop up displaying score and asking to play again
-        //displays under Game Over message, waits 2 or 3 seconds
-        ///Game Over animating up in Y before displaying play again option would be cool
-        //keyboard to select play again or exit
+
 //generate rows of enemies
     //define rules of enemy shots.
     //respawn different color enemy with faster/different shots after eliminating a set
@@ -109,6 +108,19 @@ int main()
 //Main menu start screen
 //Display current score on main screen
 //User not affected by bullets for 3 seconds during respawn
+//Prompt to play again or return to main menu upon Game Over
+    //Delay 3 seconds
+    //Prompt Play again    
+//Instructions Page
+    //Return to main menu
+//Handle re-spawn
+//when out of lives        
+    //pop up displaying score and asking to play again
+        //displays under Game Over message, waits 2 or 3 seconds
+        //keyboard to select play again or exit
+
+
+
 
 
 //BUGS

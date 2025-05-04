@@ -44,7 +44,6 @@ void Ship::moveShip()
         }
         mShipBoundingBox = mShipSprite.getGlobalBounds();
     }
-
 }
 
 void Ship::draw(sf::RenderWindow& window)

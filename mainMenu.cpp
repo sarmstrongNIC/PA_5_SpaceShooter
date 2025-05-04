@@ -34,6 +34,12 @@ MainMenu::MainMenu(sf::RenderWindow &window)
     mExitText.setCharacterSize(TEXTSIZE);
     mExitText.setFillColor(sf::Color::White);
     mExitText.setPosition(100, 250);
+
+    mInstructions.setFont(mFont);
+    mInstructions.setString("Press Spacebar to shoot. \nMove with the left and right arrows. \nShoot enemies to eliminate them. \nTry to survive as long as you can!\n\n\nPress Spacebar to return to Main Menu");
+    mInstructions.setCharacterSize(TEXTSIZE);
+    mInstructions.setFillColor(sf::Color::White);
+    mInstructions.setPosition(20, 150);
 }
 
 void MainMenu::display(sf::RenderWindow &window)
@@ -43,6 +49,13 @@ void MainMenu::display(sf::RenderWindow &window)
     window.draw(mInstructionsText);
     window.draw(mHighScoresText);
     window.draw(mExitText);
+    window.display();
+}
+
+void MainMenu::displayInstructions(sf::RenderWindow &window)
+{
+    window.clear();
+    window.draw(mInstructions);
     window.display();
 }
 
