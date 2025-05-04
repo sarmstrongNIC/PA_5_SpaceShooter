@@ -23,6 +23,8 @@ Game::Game(sf::RenderWindow &window) : mPlayerSpaceShip(window.getSize()), mEnem
     mHighScore = 0;
     mIsDone = false;
     mGameOver = false;
+    mRespawning = false;
+    mPlayAgain = true;
 }
 
 void Game::handleInput(sf::RenderWindow &window)
@@ -47,33 +49,45 @@ void Game::update(sf::RenderWindow &window)
     {
         std::cout << "GAME OVER" << std::endl;
         mGameOver = true;
+        mGameOverTimer.restart();
         if(mScore > mHighScore)
         {
             mHighScore = mScore;
         }
         //display game over screen
         //pop up displaying score and asking to play again
-        mGameOverText.setFont(mFont);
-        mGameOverText.setCharacterSize(250);
-        mGameOverText.setFillColor(sf::Color::White);
-        mGameOverText.setPosition(window.getSize().x/2 - 275, window.getSize().y/2 - 250);
-        mGameOverText.setString("GAME OVER");
-
-        
+        if(mGameOver && (mGameOverTimer.getElapsedTime() < mGameOverDelay))
+        {
+            mGameOverText.setFont(mFont);
+            mGameOverText.setCharacterSize(250);
+            mGameOverText.setFillColor(sf::Color::White);
+            mGameOverText.setPosition(window.getSize().x/2 - 275, window.getSize().y/2 - 250);
+            mGameOverText.setString("GAME OVER");
+        }
     }
     for(std::size_t i = 0; i < mEnemy.enemyBullets.size(); i++)
-    {
-        bool userHit = mPlayerSpaceShip.checkCollision(mEnemy.enemyBullets[i]);
-        if(userHit)
+    {            
+        //ship not affected by bullets for cooldown period after hit
+        if (mShipHit.getElapsedTime() > mShipHitCooldown)
         {
-            std::swap(mEnemy.enemyBullets[i], mEnemy.enemyBullets.back());
-            mEnemy.enemyBullets.pop_back();
-            if(mPlayerSpaceShip.mLives > 0)
+            mRespawning = false;
+        }
+        if(!mRespawning)
+        {
+            bool userHit = mPlayerSpaceShip.checkCollision(mEnemy.enemyBullets[i]);
+            if(userHit)
             {
-                mPlayerSpaceShip.mLives--;
-            }
-            std::cout << "SPACESHIP HIT" << std::endl;
-            std::cout << mPlayerSpaceShip.mLives << " Lives Remaining" << std::endl;
+                std::swap(mEnemy.enemyBullets[i], mEnemy.enemyBullets.back());
+                mEnemy.enemyBullets.pop_back();
+                if(mPlayerSpaceShip.mLives > 0)
+                {
+                    mPlayerSpaceShip.mLives--;
+                }
+                std::cout << "SPACESHIP HIT" << std::endl;
+                std::cout << mPlayerSpaceShip.mLives << " Lives Remaining" << std::endl;
+                mRespawning = true;
+                mShipHit.restart();
+            }   
         }
     }
     for(std::size_t i = 0; i < mPlayerSpaceShip.mBullets.size(); i++)
@@ -90,8 +104,54 @@ void Game::update(sf::RenderWindow &window)
     }
     mScoreText.setString("Score: " + std::to_string(mScore));
     mLivesText.setString("Lives Remaining: " + std::to_string(mPlayerSpaceShip.mLives));
-}
+    //Play again prompt
+    if(mGameOver && (mGameOverTimer.getElapsedTime() > mGameOverDelay))
+    {
+        mGameOverText.setFont(mFont);
+        mGameOverText.setCharacterSize(250);
+        mGameOverText.setFillColor(sf::Color::White);
+        mGameOverText.setPosition(window.getSize().x/2 - 275, window.getSize().y/2 - 400);
+        mGameOverText.setString("Play Again?");
 
+        mPlayAgainText.setFont(mFont);
+        mPlayAgainText.setCharacterSize(150);
+        mPlayAgainText.setFillColor(sf::Color::White);
+        mPlayAgainText.setPosition(window.getSize().x/2 - 150, window.getSize().y/2-200);
+        mPlayAgainText.setString("Yes");
+
+        mDeclineText.setFont(mFont);
+        mDeclineText.setCharacterSize(150);
+        mDeclineText.setFillColor(sf::Color::White);
+        mDeclineText.setPosition(window.getSize().x/2 + 50, window.getSize().y/2-200);
+        mDeclineText.setString("No");
+
+        if(mPlayAgain == true)
+        {
+            mPlayAgainText.setFillColor(sf::Color::Red);
+        }
+        else
+        {
+            mDeclineText.setFillColor(sf::Color::Red);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        {
+            mPlayAgain = true;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        {
+            mPlayAgain = false;
+        }
+        
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mPlayAgain == true)
+        {
+            std::cout << "Play again selected" << std::endl;
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mPlayAgain == false)
+        {
+            std::cout << "Decline play again" << std::endl;
+        }
+    }
+}
 
 //friend for spaceship and enemy draw?
 void Game::render(sf::RenderWindow &window)
@@ -106,6 +166,11 @@ void Game::render(sf::RenderWindow &window)
     if(mGameOver)
     {
         window.draw(mGameOverText);
+        if((mGameOverTimer.getElapsedTime() > mGameOverDelay))
+        {
+            window.draw(mPlayAgainText);
+            window.draw(mDeclineText);
+        }
     }
     window.display();
 }
@@ -135,17 +200,17 @@ void Game::spawnFighters(int count, sf::Vector2u position)
         }
     }
 }
+
 int Game::displayMainMenu(sf::RenderWindow &window)
 {
-    
     mMenu.display(window);
     sf::Event event;
     while (window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
+        {
             window.close();
-            
-
+        }
         if (event.type == sf::Event::KeyPressed)
         {
             if (event.key.code == sf::Keyboard::Up)
@@ -153,7 +218,6 @@ int Game::displayMainMenu(sf::RenderWindow &window)
                 std::cout << "Up key pressed" << std::endl;
                 if(selectedMenuItem == 0)
                 {
-                    
                     selectedMenuItem = 3;
                 }
                 else
@@ -161,8 +225,8 @@ int Game::displayMainMenu(sf::RenderWindow &window)
                     selectedMenuItem--;
                 }
                 std::cout << "selectedMenuItem = " << selectedMenuItem << std::endl;
-
             }
+
             else if (event.key.code == sf::Keyboard::Down)
             {
                 std::cout << "Down key pressed" << std::endl;

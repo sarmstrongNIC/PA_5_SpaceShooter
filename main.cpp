@@ -61,15 +61,16 @@ int main()
 
 
 //Sam Next:
-    //capture high score
     //Prompt to play again or return to main menu upon Game Over
+        //Delay 3 seconds
+        //Prompt Play again
     //Instructions Page
         //Return to main menu
+    //capture high score
 
-//populate enemies
-//Main menu start screen
-//Display current score on main screen
-//User not affected by bullets for 3 seconds during respawn
+
+
+
 //enemy destroyed and disappears when hit
 //Handle re-spawn
 //when out of lives        
@@ -77,9 +78,6 @@ int main()
         //displays under Game Over message, waits 2 or 3 seconds
         ///Game Over animating up in Y before displaying play again option would be cool
         //keyboard to select play again or exit
-//cooldown for enemy bullets (shoot one at a time like spaceship)
-    //maybe not necessary since button push shot is only for debugging
-
 //generate rows of enemies
     //define rules of enemy shots.
     //respawn different color enemy with faster/different shots after eliminating a set
@@ -93,6 +91,9 @@ int main()
     //dynamic ship origin rather than magic #s
 //fade in display for user when respawning
     //flash red when hit
+//If high score, display message, ask for Initials
+
+
 
 //DONE
 
@@ -105,6 +106,10 @@ int main()
     //display game over screen
 //decrement lives when hit   
 //Display score during game
+//Main menu start screen
+//Display current score on main screen
+//User not affected by bullets for 3 seconds during respawn
+
 
 //BUGS
     ////Bullet hit counts as hit when it crosses bounding box but misses ship (top corners)

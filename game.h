@@ -15,9 +15,6 @@ public:
     ~Game(){};
 
     void handleInput();
-    void update();
-    void render();
-    bool isDone() const;
     void spawnFighters(int count, sf::Vector2u position);
     void handleInput(sf::RenderWindow &window);
     void update(sf::RenderWindow &window);
@@ -38,10 +35,18 @@ private:
     Ship mPlayerSpaceShip;
     Enemy mEnemy;
     std::vector<Enemy*> mFighters;
+    sf::Clock mShipHit;
+    sf::Time mShipHitCooldown = sf::seconds(1.0f);
+    sf::Clock mGameOverTimer;
+    sf::Time mGameOverDelay = sf::seconds(4.0f);
     bool mIsDone;
     int mScore;
     int mHighScore;
     bool mGameOver;
+    bool mRespawning;
+    sf::Text mPlayAgainText;
+    sf::Text mDeclineText;
+    bool mPlayAgain;
     
     int selectedMenuItem = 0;
 };

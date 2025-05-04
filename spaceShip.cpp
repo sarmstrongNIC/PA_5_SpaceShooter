@@ -31,16 +31,20 @@ Ship::Ship(const sf::Vector2u &windowsize)
 void Ship::moveShip()
 {
     //TODO remove magic #s for screen edge detection
-    float speed = 40.f;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if (mShipSprite.getPosition().x - (209.0/2)> 0)
-            mShipSprite.move((mIncrement*-1), 0.f);
+    if(mLives > 0)
+    {
+        float speed = 40.f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            if (mShipSprite.getPosition().x - (209.0/2)> 0)
+                mShipSprite.move((mIncrement*-1), 0.f);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            if (mShipSprite.getPosition().x + (209.0/2) < mWindowSize.x)
+                mShipSprite.move(mIncrement, 0.f);
+        }
+        mShipBoundingBox = mShipSprite.getGlobalBounds();
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        if (mShipSprite.getPosition().x + (209.0/2) < mWindowSize.x)
-            mShipSprite.move(mIncrement, 0.f);
-    }
-    mShipBoundingBox = mShipSprite.getGlobalBounds();
+
 }
 
 void Ship::draw(sf::RenderWindow& window)
