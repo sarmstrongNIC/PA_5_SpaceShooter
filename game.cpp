@@ -19,6 +19,7 @@ Game::Game(sf::RenderWindow &window) : mPlayerSpaceShip(window.getSize()), mEnem
     mScoreText.setPosition(10.f, 0.f);
 
     //Enemy mEnemyInitial
+    mWave = 1;
     mScore = 0;
     mHighScore = 0;
     mIsDone = false;
@@ -45,6 +46,10 @@ void Game::handleInput(sf::RenderWindow &window)
 
 void Game::update(sf::RenderWindow &window)
 {
+    if(!mGameOver)
+    {
+        spawnFighters();
+    }
     if(mPlayerSpaceShip.mLives == 0 && mGameOver == false)
     {
         std::cout << "GAME OVER" << std::endl;
@@ -187,8 +192,42 @@ bool Game::isDone(sf::RenderWindow &window)
     return (!window.isOpen() || mIsDone);
 }
 
-
-void Game::spawnFighters(int count, sf::Vector2u position)
+void Game::spawnFighters() //function to check if all fighters are destroyed and spawn new ones
+{
+    int destroyed = 0;
+    //check if all fighter vectors are null/destroyed
+    for(int i = 0; i < mFightersRow1.size(); i++)
+    {
+        if(mFightersRow1[i] == nullptr)
+        {
+            destroyed +=1;
+        }
+        if(mFightersRow2[i] == nullptr)
+        {
+            destroyed +=1;
+        }
+        if(mFightersRow3[i] == nullptr)
+        {
+            destroyed +=1;
+        }
+    }
+    if (destroyed == mFightersRow1.size()*3)
+    {
+        for(int i = 0; i < mFightersRow1.size(); i++)//clear vectors
+        {
+            mFightersRow1.pop_back();
+            mFightersRow2.pop_back();
+            mFightersRow3.pop_back();
+        }
+        //spawn new enemy fighters
+        spawnFighterRow(5,sf::Vector2u{20,0},mFightersRow1);
+        spawnFighterRow(5,sf::Vector2u{20,80},mFightersRow2);
+        spawnFighterRow(5,sf::Vector2u{20,160},mFightersRow3);
+        mWave =+ 1;
+    }
+}
+//spawns fighters in a row
+void Game::spawnFighterRow(int count, sf::Vector2u position, std::vector<Enemy*> FighterRow)
 {
     //fighters spawn left to right
     for(int i = 0; i < count; i++)
@@ -203,7 +242,7 @@ void Game::spawnFighters(int count, sf::Vector2u position)
         else
         {
             Enemy *temp = new Enemy(position);
-            mFighters.push_back(temp);
+            FighterRow.push_back(temp);
             position.x +=40;
         }
     }

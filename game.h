@@ -15,7 +15,7 @@ public:
     ~Game(){};
 
     void handleInput();
-    void spawnFighters(int count, sf::Vector2u position);
+    void spawnFighters();
     void handleInput(sf::RenderWindow &window);
     void update(sf::RenderWindow &window);
     void render(sf::RenderWindow &window);
@@ -32,11 +32,14 @@ public:
     MainMenu mMenu;
 
 private:
+    void spawnFighterRow(int count, sf::Vector2u position, std::vector<Enemy*> FighterRow);
     sf::Texture mHomeTextureTile;
     sf::RenderWindow mWindow;
     Ship mPlayerSpaceShip;
     Enemy mEnemy;
-    std::vector<Enemy*> mFighters;
+    std::vector<Enemy*> mFightersRow1;
+    std::vector<Enemy*> mFightersRow2;
+    std::vector<Enemy*> mFightersRow3;
     sf::Clock mShipHit;
     sf::Time mShipHitCooldown = sf::seconds(1.0f);
     sf::Clock mGameOverTimer;
@@ -44,6 +47,7 @@ private:
     bool mIsDone;
     int mScore;
     int mHighScore;
+    int mWave; //display?
     bool mGameOver;
     bool mRespawning;
     sf::Text mPlayAgainText;
