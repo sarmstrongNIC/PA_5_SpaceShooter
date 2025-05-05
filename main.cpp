@@ -1,7 +1,7 @@
 #include "game.h"
 #include <iostream>
 
-
+//g++ *.cpp -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system  <- compile command
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1000, 800), "SpaceShooters");

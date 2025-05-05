@@ -106,11 +106,12 @@ void Game::spawnFighters(int count, sf::Vector2u position)
     for(int i = 0; i < count; i++)
     {
     //check if spacing will go outside of window
+    //spacing value may need adjustment
         if(position.x > mWindow.getSize().x)
         {
             break;
         }
-    //create new objects using count to loop
+    //create new object
         else
         {
             Enemy *temp = new Enemy(position);
