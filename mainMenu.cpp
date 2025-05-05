@@ -4,6 +4,8 @@
 
 MainMenu::MainMenu(sf::RenderWindow &window)
 {
+    std::cout << "MainMenu Constructor Called " << std::endl;
+
     if (!mFont.loadFromFile("game_over.ttf"))
     {
         std::cout << "Error loading font" << std::endl;
@@ -32,6 +34,12 @@ MainMenu::MainMenu(sf::RenderWindow &window)
     mExitText.setCharacterSize(TEXTSIZE);
     mExitText.setFillColor(sf::Color::White);
     mExitText.setPosition(100, 250);
+
+    mInstructions.setFont(mFont);
+    mInstructions.setString("Press Spacebar to shoot. \nMove with the left and right arrows. \nShoot enemies to eliminate them. \nTry to survive as long as you can!\n\n\nPress Spacebar to return to Main Menu");
+    mInstructions.setCharacterSize(TEXTSIZE);
+    mInstructions.setFillColor(sf::Color::White);
+    mInstructions.setPosition(20, 150);
 }
 
 void MainMenu::display(sf::RenderWindow &window)
@@ -44,7 +52,40 @@ void MainMenu::display(sf::RenderWindow &window)
     window.display();
 }
 
+void MainMenu::displayInstructions(sf::RenderWindow &window)
+{
+    window.clear();
+    window.draw(mInstructions);
+    window.display();
+}
+
 bool MainMenu::handleInput(sf::RenderWindow &window)
 {
     return false;
+}
+
+void MainMenu::setColor(int i)
+{
+    mPlayText.setFillColor(sf::Color::White);
+    mInstructionsText.setFillColor(sf::Color::White);
+    mHighScoresText.setFillColor(sf::Color::White);
+    mExitText.setFillColor(sf::Color::White);
+
+    if(i == 0)
+    {
+        //std::cout << "setColor is called " << std::endl; 
+        mPlayText.setFillColor(sf::Color::Red);
+    }
+    else if(i == 1)
+    {
+        mInstructionsText.setFillColor(sf::Color::Red);
+    }
+    else if(i == 2)
+    {
+        mHighScoresText.setFillColor(sf::Color::Red);
+    }
+    else if(i == 3)
+    {
+        mExitText.setFillColor(sf::Color::Red);
+    }
 }

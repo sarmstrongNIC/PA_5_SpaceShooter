@@ -10,13 +10,16 @@ class MainMenu
 public:
     MainMenu(sf::RenderWindow &window);
     void display(sf::RenderWindow &window);
+    void displayInstructions(sf::RenderWindow &window);
     bool handleInput(sf::RenderWindow &window);
+    void setColor(int i);
 
 private:
     sf::Text mPlayText;
     sf::Text mInstructionsText;
     sf::Text mHighScoresText;
     sf::Text mExitText;
+    sf::Text mInstructions;
     int mSelectedOption;
     sf::Font mFont;
 };
