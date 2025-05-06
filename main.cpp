@@ -21,9 +21,6 @@ int main()
             game.returnMainMenu = false;
             menuChoice = game.displayMainMenu(window);
             menuHighlight = game.getSelectedMenuItem();
-            // std::cout << "Enter Menu Choice: " << std::endl;
-            // std::cin >> menuChoice;
-            //std::cout << "MenuHighlight is: " << menuHighlight << std::endl;
             game.mMenu.setColor(menuHighlight);
 
         }

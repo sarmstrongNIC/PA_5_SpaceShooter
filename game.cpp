@@ -19,6 +19,13 @@ Game::Game(sf::RenderWindow &window) : mPlayerSpaceShip(window.getSize()), mEnem
     mScoreText.setPosition(10.f, 0.f);
 
     //Enemy mEnemyInitial
+    for(int i = 0; i < 6; i++)
+    {
+        Enemy enemy(window.getSize());
+        enemy.mEnemySprite.setPosition(100 + i * 150, 100);
+        mFighters.push_back(enemy);
+
+    }
     mScore = 0;
     mHighScore = 0;
     mIsDone = false;
@@ -164,8 +171,13 @@ void Game::update(sf::RenderWindow &window)
 void Game::render(sf::RenderWindow &window)
 {
     window.clear(sf::Color::Black);
-    mEnemy.draw(window);
-    mEnemy.drawBullet(window);
+    for(int i = 0; i < 6; i++)
+    {
+        mFighters[i].draw(window);
+        mFighters[i].drawBullet(window);
+    }
+    // mEnemy.draw(window);
+    // mEnemy.drawBullet(window);
     mPlayerSpaceShip.draw(window);
     mPlayerSpaceShip.drawBullet(window);
     window.draw(mLivesText);
@@ -188,25 +200,25 @@ bool Game::isDone(sf::RenderWindow &window)
 }
 
 
-void Game::spawnFighters(int count, sf::Vector2u position)
-{
-    //fighters spawn left to right
-    for(int i = 0; i < count; i++)
-    {
-    //check if spacing will go outside of window
-        if(position.x > mWindow.getSize().x)
-        {
-            break;
-        }
-    //create new objects using count to loop
-        else
-        {
-            Enemy *temp = new Enemy(position);
-            mFighters.push_back(temp);
-            position.x +=40;
-        }
-    }
-}
+// void Game::spawnFighters(int count, sf::Vector2u position)
+// {
+//     //fighters spawn left to right
+//     for(int i = 0; i < count; i++)
+//     {
+//     //check if spacing will go outside of window
+//         if(position.x > mWindow.getSize().x)
+//         {
+//             break;
+//         }
+//     //create new objects using count to loop
+//         else
+//         {
+//             Enemy *temp = new Enemy(position);
+//             mFighters.push_back(temp);
+//             position.x +=40;
+//         }
+//     }
+// }
 
 int Game::displayMainMenu(sf::RenderWindow &window)
 {

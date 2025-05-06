@@ -36,7 +36,7 @@ private:
     sf::RenderWindow mWindow;
     Ship mPlayerSpaceShip;
     Enemy mEnemy;
-    std::vector<Enemy*> mFighters;
+    std::vector<Enemy> mFighters;
     sf::Clock mShipHit;
     sf::Time mShipHitCooldown = sf::seconds(1.0f);
     sf::Clock mGameOverTimer;

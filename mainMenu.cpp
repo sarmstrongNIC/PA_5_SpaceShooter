@@ -36,7 +36,10 @@ MainMenu::MainMenu(sf::RenderWindow &window)
     mExitText.setPosition(100, 250);
 
     mInstructions.setFont(mFont);
-    mInstructions.setString("Press Spacebar to shoot. \nMove with the left and right arrows. \nShoot enemies to eliminate them. \nTry to survive as long as you can!\n\n\nPress Spacebar to return to Main Menu");
+    mInstructions.setString("Press Spacebar to shoot. \nMove with the left and right arrows. "
+        "\nShoot enemies to eliminate them. "
+        "\nTry to survive as long as you can!"
+        "\n\n\nPress Spacebar to return to Main Menu");
     mInstructions.setCharacterSize(TEXTSIZE);
     mInstructions.setFillColor(sf::Color::White);
     mInstructions.setPosition(20, 150);
