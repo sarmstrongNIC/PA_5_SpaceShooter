@@ -11,7 +11,6 @@ public:
     MainMenu(sf::RenderWindow &window);
     void display(sf::RenderWindow &window);
     void displayInstructions(sf::RenderWindow &window);
-    bool handleInput(sf::RenderWindow &window);
     void setColor(int i);
 
 private:

@@ -15,10 +15,10 @@ class Enemy
     void handleInput();
     std::vector<Bullet> enemyBullets;
     bool checkCollision(Bullet& bullet);
+    sf::RectangleShape mEnemySprite;//TODO, create proper sprite
     void setPosition(sf::Vector2f position);
 
     private:
-    sf::RectangleShape mEnemySprite;//TODO, create proper sprite
     sf::FloatRect mEnemyBoundingBox;
     sf::Vector2u mWindowSize;
 

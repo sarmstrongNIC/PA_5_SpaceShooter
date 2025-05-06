@@ -1,12 +1,26 @@
+/**
+ * @file enemy.cpp
+ * @author Sam Armstrong, Nick Bailey
+ * @brief 
+ * @version 0.1
+ * @date 2025-05-05
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
 #include "enemy.h"
 
+/**
+ * @brief Construct a new Enemy:: Enemy object
+ * 
+ * @param windowSize 
+ */
 Enemy::Enemy(const sf::Vector2u &windowSize)
 {
     mEnemySprite.setSize(sf::Vector2f(60.f, 40.f));
     mEnemySprite.setFillColor(sf::Color::Red);
     mEnemySprite.setPosition(windowSize.x / 2.f, 100.f);
     mWindowSize = windowSize;
-    std::cout << "Enemy constructor called" << std::endl;
     mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
 }
 
@@ -15,13 +29,20 @@ void Enemy::setPosition(sf::Vector2f position)
     mEnemySprite.setPosition(position);
 }
 
-
+/**
+ * @brief fires enemy bullet
+ * 
+ */
 void Enemy::fireBullet()
 {
     Bullet newBullet(mEnemySprite.getPosition(),true);
     enemyBullets.push_back(newBullet);
 }
 
+/**
+ * @brief input loop for manually shooting enemy bullets in development.
+ * 
+ */
 void Enemy::handleInput()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) 
@@ -36,11 +57,21 @@ void Enemy::handleInput()
     }
 }
 
+/**
+ * @brief draw enemy sprite
+ * 
+ * @param window 
+ */
 void Enemy::draw(sf::RenderWindow& window)
 {
     window.draw(mEnemySprite);
 }
 
+/**
+ * @brief draw enemy bullet as long as it is on the screen
+ * 
+ * @param window 
+ */
 void Enemy::drawBullet(sf::RenderWindow &window)
 {
     for (std::size_t i = 0; i < enemyBullets.size();)
@@ -53,11 +84,18 @@ void Enemy::drawBullet(sf::RenderWindow &window)
         }
         else
         {
-            ++i;
+            i++;
         }
     }
 }
 
+/**
+ * @brief check for collision between enemy and bullet
+ * 
+ * @param bullet bullet shot by user spaceship
+ * @return true collision detected 
+ * @return false no collision
+ */
 bool Enemy::checkCollision(Bullet& bullet)
 {
     return mEnemyBoundingBox.intersects(bullet.getBoundingBox());

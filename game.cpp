@@ -19,6 +19,7 @@ Game::Game(sf::RenderWindow &window) : mPlayerSpaceShip(window.getSize()), mEnem
     mScoreText.setPosition(10.f, 0.f);
 
     //Enemy mEnemyInitial
+
     mWave = 1;
     mScore = 0;
     mHighScore = 0;
@@ -169,9 +170,13 @@ void Game::update(sf::RenderWindow &window)
 void Game::render(sf::RenderWindow &window)
 {
     window.clear(sf::Color::Black);
-    mEnemy.draw(window);
-    mEnemy.drawBullet(window);
-    drawFighters(window);
+    // for(int i = 0; i < 1; i++)
+    // {
+    //     mFightersRow1[i]->draw(window);
+    //     mFightersRow1[i]->drawBullet(window);
+    // }
+    // mEnemy.draw(window);
+    // mEnemy.drawBullet(window);
     mPlayerSpaceShip.draw(window);
     mPlayerSpaceShip.drawBullet(window);
     window.draw(mLivesText);
