@@ -1,25 +1,36 @@
+/**
+ * @file spaceShip.cpp
+ * @author Sam Armstrong, Nick Bailey
+ * @brief 
+ * @version 0.1
+ * @date 2025-05-05
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
 #include "spaceShip.h"
 
-//TODO: improve default constructor, investigate whether it is possible to remove
-Ship::Ship()
-{
-    mShipTextureTile.loadFromFile("galagaShip_crop.png");
-    mShipSprite.setTexture(mShipTextureTile);
-    mShipSprite.setOrigin(209.f / 2.f, 241.f / 2.f);
-    mShipSprite.setPosition(320.f, 40.f);
-    mIncrement = 5.0;
-    mLives = 3;
-    mShipBoundingBox = mShipSprite.getGlobalBounds();
-    std::cout << "default constructor called" << std::endl;
-}
-
+// Ship::Ship()
+// {
+//     mShipTextureTile.loadFromFile("galagaShip_crop.png");
+//     mShipSprite.setTexture(mShipTextureTile);
+//     mShipSprite.setOrigin(209.f / 2.f, 241.f / 2.f);
+//     mShipSprite.setPosition(320.f, 40.f);
+//     mIncrement = 5.0;
+//     mLives = 3;
+//     mShipBoundingBox = mShipSprite.getGlobalBounds();
+//     std::cout << "default constructor called" << std::endl;
+// }
+/**
+ * @brief Construct a new Ship:: Ship object
+ * 
+ * @param windowsize game window size
+ */
 Ship::Ship(const sf::Vector2u &windowsize)
 {
     mShipTextureTile.loadFromFile("galagaShip_crop.png");
     mShipSprite.setTexture(mShipTextureTile);
     mWindowSize = windowsize;
-    //TODO set rect around sprite
-    //mHomeSprite.setTextureRect(sf::IntRect(64, 32, 62, 62));
     mShipSprite.setOrigin(209.f/2.f, 241.f/2.f);
     mShipSprite.setPosition(320.f, 600.f);
     mIncrement = 5.0;
@@ -27,10 +38,12 @@ Ship::Ship(const sf::Vector2u &windowsize)
     mShipBoundingBox = mShipSprite.getGlobalBounds();
 }
 
-
+/**
+ * @brief Move ship left/right within screen bounds
+ * 
+ */
 void Ship::moveShip()
 {
-    //TODO remove magic #s for screen edge detection
     if(mLives > 0)
     {
         float speed = 40.f;
@@ -46,17 +59,30 @@ void Ship::moveShip()
     }
 }
 
+/**
+ * @brief draw the ship sprite
+ * 
+ * @param window 
+ */
 void Ship::draw(sf::RenderWindow& window)
 {
     window.draw(mShipSprite);
 }
 
+/**
+ * @brief User fire bullet, creates new bullet object
+ * 
+ */
 void Ship::fireBullet()
 {
     Bullet newBullet(mShipSprite.getPosition(), false);
     mBullets.push_back(newBullet);
 }
 
+/**
+ * @brief handleInput loop for Spaceship, spacebar to shoot a bullet. 'A' key for debugging bullets
+ * 
+ */
 void Ship::handleInput()
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && mLives > 0)
@@ -67,17 +93,21 @@ void Ship::handleInput()
             mShotClock.restart();
         }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        std::cout << "Bullets in air: " << mBullets.size() << "\n";
-        for (std::size_t i = 0; i < mBullets.size(); ++i) {
-            std::cout << "Bullet " << i << ": x = " 
-                      << mBullets[i].getPosition().x << ", y = "
-                      << mBullets[i].getPosition().y << "\n";
-        }
-    }
+    // if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+    //     std::cout << "Bullets in air: " << mBullets.size() << "\n";
+    //     for (std::size_t i = 0; i < mBullets.size(); ++i) {
+    //         std::cout << "Bullet " << i << ": x = " 
+    //                   << mBullets[i].getPosition().x << ", y = "
+    //                   << mBullets[i].getPosition().y << "\n";
+    //     }
+    // }
     
 }
-
+/**
+ * @brief drawbullet if it exists on the screen
+ * 
+ * @param window 
+ */
 void Ship::drawBullet(sf::RenderWindow &window)
 {
     for (std::size_t i = 0; i < mBullets.size();)
@@ -90,20 +120,19 @@ void Ship::drawBullet(sf::RenderWindow &window)
         }
         else
         {
-            ++i;
+            i++;
         }
     }
 }
 
+/**
+ * @brief checks for colission between a bullet object and the ship's bounding box
+ * 
+ * @param bullet bullet shot from enemy
+ * @return true bullet has hit spaceship
+ * @return false no collision 
+ */
 bool Ship::checkCollision(Bullet& bullet)
 {
-    
-        // std::cout << "Collision check Bullet: x = " 
-        //           << bullet.getPosition().x << ", y = "
-        //           << bullet.getPosition().y << "\n";
-        // std::cout << "Ship position: x = " 
-        //           << mShipBoundingBox.left << ", y = "
-        //           << mShipBoundingBox.top << "\n";
-
     return mShipBoundingBox.intersects(bullet.getBoundingBox());
 }

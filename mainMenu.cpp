@@ -1,11 +1,22 @@
+/**
+ * @file mainMenu.cpp
+ * @author Sam Armstrong
+ * @brief main menu class
+ * @version 0.1
+ * @date 2025-05-05
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
 #include "mainMenu.h"
 
-
-
+/**
+ * @brief Construct a new Main Menu:: Main Menu object
+ * 
+ * @param window 
+ */
 MainMenu::MainMenu(sf::RenderWindow &window)
 {
-    std::cout << "MainMenu Constructor Called " << std::endl;
-
     if (!mFont.loadFromFile("game_over.ttf"))
     {
         std::cout << "Error loading font" << std::endl;
@@ -45,6 +56,11 @@ MainMenu::MainMenu(sf::RenderWindow &window)
     mInstructions.setPosition(20, 150);
 }
 
+/**
+ * @brief main menu display loop
+ * 
+ * @param window 
+ */
 void MainMenu::display(sf::RenderWindow &window)
 {
     window.clear();
@@ -55,6 +71,11 @@ void MainMenu::display(sf::RenderWindow &window)
     window.display();
 }
 
+/**
+ * @brief display the instructions page
+ * 
+ * @param window 
+ */
 void MainMenu::displayInstructions(sf::RenderWindow &window)
 {
     window.clear();
@@ -62,11 +83,11 @@ void MainMenu::displayInstructions(sf::RenderWindow &window)
     window.display();
 }
 
-bool MainMenu::handleInput(sf::RenderWindow &window)
-{
-    return false;
-}
-
+/**
+ * @brief sets the color for menu for selection 
+ * 
+ * @param i 
+ */
 void MainMenu::setColor(int i)
 {
     mPlayText.setFillColor(sf::Color::White);
@@ -76,7 +97,6 @@ void MainMenu::setColor(int i)
 
     if(i == 0)
     {
-        //std::cout << "setColor is called " << std::endl; 
         mPlayText.setFillColor(sf::Color::Red);
     }
     else if(i == 1)

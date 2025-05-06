@@ -1,3 +1,13 @@
+/**
+ * @file spaceShip.h
+ * @author Sam Armstrong, Nick Bailey
+ * @brief 
+ * @version 0.1
+ * @date 2025-05-05
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
 #ifndef SPACESHIP_H
 #define SPACESHIP_H
 
@@ -35,7 +45,6 @@ private:
     
 
     void fireBullet();
-    
     
 };
 

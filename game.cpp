@@ -19,6 +19,7 @@ Game::Game(sf::RenderWindow &window) : mPlayerSpaceShip(window.getSize()), mEnem
     mScoreText.setPosition(10.f, 0.f);
 
     //Enemy mEnemyInitial
+
     mWave = 1;
     mScore = 0;
     mHighScore = 0;
@@ -169,11 +170,11 @@ void Game::update(sf::RenderWindow &window)
 void Game::render(sf::RenderWindow &window)
 {
     window.clear(sf::Color::Black);
-    for(int i = 0; i < 6; i++)
-    {
-        mFighters[i].draw(window);
-        mFighters[i].drawBullet(window);
-    }
+    // for(int i = 0; i < 1; i++)
+    // {
+    //     mFightersRow1[i]->draw(window);
+    //     mFightersRow1[i]->drawBullet(window);
+    // }
     // mEnemy.draw(window);
     // mEnemy.drawBullet(window);
     mPlayerSpaceShip.draw(window);
@@ -232,7 +233,7 @@ void Game::spawnFighters() //function to check if all fighters are destroyed and
     }
 }
 //spawns fighters in a row
-void Game::spawnFighterRow(int count, sf::Vector2u position, std::vector<Enemy*> FighterRow)
+void Game::spawnFighterRow(int count, sf::Vector2u position, std::vector<Enemy*> &FighterRow)
 {
     //fighters spawn left to right
     for(int i = 0; i < count; i++)

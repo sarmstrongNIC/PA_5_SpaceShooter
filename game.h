@@ -32,7 +32,7 @@ public:
     MainMenu mMenu;
 
 private:
-    void spawnFighterRow(int count, sf::Vector2u position, std::vector<Enemy*> FighterRow);
+    void spawnFighterRow(int count, sf::Vector2u position, std::vector<Enemy*>& FighterRow);
     sf::Texture mHomeTextureTile;
     sf::RenderWindow mWindow;
     Ship mPlayerSpaceShip;
