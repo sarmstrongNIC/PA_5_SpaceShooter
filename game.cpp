@@ -48,7 +48,7 @@ void Game::update(sf::RenderWindow &window)
 {
     if(!mGameOver)
     {
-        spawnFighters();
+        spawnFighters(window);
     }
     if(mPlayerSpaceShip.mLives == 0 && mGameOver == false)
     {
@@ -171,6 +171,7 @@ void Game::render(sf::RenderWindow &window)
     window.clear(sf::Color::Black);
     mEnemy.draw(window);
     mEnemy.drawBullet(window);
+    drawFighters(window);
     mPlayerSpaceShip.draw(window);
     mPlayerSpaceShip.drawBullet(window);
     window.draw(mLivesText);
@@ -192,7 +193,7 @@ bool Game::isDone(sf::RenderWindow &window)
     return (!window.isOpen() || mIsDone);
 }
 
-void Game::spawnFighters() //function to check if all fighters are destroyed and spawn new ones
+void Game::spawnFighters(sf::RenderWindow &window) //function to check if all fighters are destroyed and spawn new ones
 {
     int destroyed = 0;
     //check if all fighter vectors are null/destroyed
@@ -211,7 +212,7 @@ void Game::spawnFighters() //function to check if all fighters are destroyed and
             destroyed +=1;
         }
     }
-    if (destroyed == mFightersRow1.size()*3)
+    if (destroyed == mFightersRow1.size()*3 || mFightersRow1.size() == 0)
     {
         for(int i = 0; i < mFightersRow1.size(); i++)//clear vectors
         {
@@ -220,30 +221,49 @@ void Game::spawnFighters() //function to check if all fighters are destroyed and
             mFightersRow3.pop_back();
         }
         //spawn new enemy fighters
-        spawnFighterRow(5,sf::Vector2u{20,0},mFightersRow1);
-        spawnFighterRow(5,sf::Vector2u{20,80},mFightersRow2);
-        spawnFighterRow(5,sf::Vector2u{20,160},mFightersRow3);
-        mWave =+ 1;
+        spawnFighterRow(5,sf::Vector2f{80,40},mFightersRow1, window);
+        spawnFighterRow(5,sf::Vector2f{80,120},mFightersRow2, window);
+        spawnFighterRow(5,sf::Vector2f{80,200},mFightersRow3, window);
+        mWave =+ 1; //wave increment
     }
 }
 //spawns fighters in a row
-void Game::spawnFighterRow(int count, sf::Vector2u position, std::vector<Enemy*> FighterRow)
+void Game::spawnFighterRow(int count, sf::Vector2f position, std::vector<Enemy*> &FighterRow, sf::RenderWindow &window)
 {
     //fighters spawn left to right
     for(int i = 0; i < count; i++)
     {
     //check if spacing will go outside of window
     //spacing value may need adjustment
-        if(position.x > mWindow.getSize().x)
+        if(position.x > window.getSize().x || position.x < 0)
         {
             break;
         }
     //create new object
         else
         {
-            Enemy *temp = new Enemy(position);
+            Enemy *temp = new Enemy(mWindow.getSize());
+            temp->setPosition(position);
             FighterRow.push_back(temp);
-            position.x +=40;
+            position.x +=180;
+        }
+    }
+}
+void Game::drawFighters(sf::RenderWindow &window)
+{
+    for (int i = 0; i < mFightersRow1.size(); i++)
+    {
+        if(mFightersRow1[i] != nullptr)
+        {
+            mFightersRow1[i]->draw(window);
+        }
+        if(mFightersRow2[i] != nullptr)
+        {
+            mFightersRow2[i]->draw(window);
+        }
+        if(mFightersRow3[i] != nullptr)
+        {
+            mFightersRow3[i]->draw(window);
         }
     }
 }

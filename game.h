@@ -15,7 +15,7 @@ public:
     ~Game(){};
 
     void handleInput();
-    void spawnFighters();
+    void spawnFighters(sf::RenderWindow &window);
     void handleInput(sf::RenderWindow &window);
     void update(sf::RenderWindow &window);
     void render(sf::RenderWindow &window);
@@ -32,7 +32,8 @@ public:
     MainMenu mMenu;
 
 private:
-    void spawnFighterRow(int count, sf::Vector2u position, std::vector<Enemy*> FighterRow);
+    void drawFighters(sf::RenderWindow &window);
+    void spawnFighterRow(int count, sf::Vector2f position, std::vector<Enemy*> &FighterRow, sf::RenderWindow &window);
     sf::Texture mHomeTextureTile;
     sf::RenderWindow mWindow;
     Ship mPlayerSpaceShip;

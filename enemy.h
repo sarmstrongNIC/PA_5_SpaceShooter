@@ -15,7 +15,7 @@ class Enemy
     void handleInput();
     std::vector<Bullet> enemyBullets;
     bool checkCollision(Bullet& bullet);
-    
+    void setPosition(sf::Vector2f position);
 
     private:
     sf::RectangleShape mEnemySprite;//TODO, create proper sprite

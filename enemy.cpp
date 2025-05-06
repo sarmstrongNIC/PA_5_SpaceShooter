@@ -10,6 +10,11 @@ Enemy::Enemy(const sf::Vector2u &windowSize)
     mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
 }
 
+void Enemy::setPosition(sf::Vector2f position)
+{
+    mEnemySprite.setPosition(position);
+}
+
 
 void Enemy::fireBullet()
 {
