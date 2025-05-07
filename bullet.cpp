@@ -57,9 +57,11 @@ bool Bullet::updateBulletPosition(sf::Vector2u &mWindowSize)
     }
     else
     {
-        mBulletShape.move(0.f,10.f);
-        if(getPosition().y > mWindowSize.y)
+        mBulletShape.move(0.f,5.f);
+        //if(getPosition().y > mWindowSize.y)
+        if(getPosition().y > 1200)
         {
+            //std::cout << "getPosition y = " << getPosition().y << " mWindowsize.y = " << mWindowSize.y << std::endl;
             mBulletActive = false;
         }
         return mBulletActive;

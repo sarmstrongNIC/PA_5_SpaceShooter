@@ -101,6 +101,22 @@ void Ship::handleInput()
     //                   << mBullets[i].getPosition().y << "\n";
     //     }
     // }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) 
+    {
+        //fireBullet();
+
+        
+
+            std::cout << "Ship Position " << ": x = " 
+                      << mShipSprite.getPosition().x << ", y = "
+                      << mShipSprite.getPosition().y << " | Bounds: left = " << mShipBoundingBox.left 
+                      << ", top = " << mShipBoundingBox.top 
+                      << ", width = " << mShipBoundingBox.width 
+                      << ", height = " << mShipBoundingBox.height << "\n";
+            
+        
+    }
     
 }
 /**
