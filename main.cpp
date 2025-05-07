@@ -9,7 +9,6 @@ int main()
     Game game(window);
     int menuChoice = -1;
     int menuHighlight = -1;
-    bool returnToMain = false;
     sf::Event event;
     
     while (window.pollEvent(event)){}

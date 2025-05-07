@@ -53,7 +53,7 @@ void Game::update(sf::RenderWindow &window)
     if(!mGameOver)
     {
         spawnFighters(window);
-        for (int i = 0; i < mFightersRow1.size(); i++)
+        for (size_t i = 0; i < mFightersRow1.size(); i++)
         {
             if(mFightersRow1[i] != nullptr)
             {
@@ -109,7 +109,7 @@ void Game::update(sf::RenderWindow &window)
  
     for(std::size_t i = 0; i < mPlayerSpaceShip.mBullets.size(); i++)
     {
-        for(int j = 0; j < mFightersRow1.size(); j++)
+        for(size_t j = 0; j < mFightersRow1.size(); j++)
         {
             if(mFightersRow1[j] != nullptr)
             {
@@ -126,7 +126,7 @@ void Game::update(sf::RenderWindow &window)
                 }
             }
         }
-        for(int j = 0; j < mFightersRow2.size(); j++)
+        for(size_t j = 0; j < mFightersRow2.size(); j++)
         {
             if(mFightersRow2[j] != nullptr)
             {
@@ -143,7 +143,7 @@ void Game::update(sf::RenderWindow &window)
                 }
             }
         }
-        for(int j = 0; j < mFightersRow3.size(); j++)
+        for(size_t j = 0; j < mFightersRow3.size(); j++)
         {
             if(mFightersRow3[j] != nullptr)
             {
@@ -207,6 +207,24 @@ void Game::update(sf::RenderWindow &window)
             mGameOver = false;
             mPlayerSpaceShip.mLives = 3;
             mScore = 0;
+            for (size_t i = 0; i < mFightersRow1.size(); i ++)
+            {
+                if(mFightersRow1[i] != nullptr)
+                {
+                    delete mFightersRow1[i];
+                    mFightersRow1[i] = nullptr;
+                }
+                if(mFightersRow2[i] != nullptr)
+                {
+                    delete mFightersRow2[i];
+                    mFightersRow2[i] = nullptr;
+                }
+                if(mFightersRow3[i] != nullptr)
+                {
+                    delete mFightersRow3[i];
+                    mFightersRow3[i] = nullptr;
+                }
+            }
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mPlayAgain == false)
         {
@@ -257,9 +275,9 @@ bool Game::isDone(sf::RenderWindow &window)
 
 void Game::spawnFighters(sf::RenderWindow &window) //function to check if all fighters are destroyed and spawn new ones
 {
-    int destroyed = 0;
+    size_t destroyed = 0;
     //check if all fighter vectors are null/destroyed
-    for(int i = 0; i < mFightersRow1.size(); i++)
+    for(size_t i = 0; i < mFightersRow1.size(); i++)
     {
         if(mFightersRow1[i] == nullptr)
         {
@@ -276,7 +294,7 @@ void Game::spawnFighters(sf::RenderWindow &window) //function to check if all fi
     }
     if (destroyed == mFightersRow1.size()*3 || mFightersRow1.size() == 0)
     {
-        for(int i = 0; i < mFightersRow1.size(); i++)//clear vectors
+        for(size_t i = 0; i < mFightersRow1.size(); i++)//clear vectors
         {
             mFightersRow1.pop_back();
             mFightersRow2.pop_back();
@@ -313,7 +331,7 @@ void Game::spawnFighterRow(int count, sf::Vector2f position, std::vector<Enemy*>
 }
 void Game::drawFighters(sf::RenderWindow &window)
 {
-    for (int i = 0; i < mFightersRow1.size(); i++)
+    for (size_t i = 0; i < mFightersRow1.size(); i++)
     {
         if(mFightersRow1[i] != nullptr)
         {

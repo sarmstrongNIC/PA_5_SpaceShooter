@@ -47,7 +47,6 @@ void Ship::moveShip()
 {
     if(mLives > 0)
     {
-        float speed = 40.f;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             if (mShipSprite.getPosition().x - (209.0/2)> 0)
                 mShipSprite.move((mIncrement*-1), 0.f);
