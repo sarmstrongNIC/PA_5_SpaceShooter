@@ -26,7 +26,6 @@ Enemy::Enemy(const sf::Vector2u &windowSize)
     mEnemyShip.setPosition(windowSize.x / 2.f, 100.f);
     mWindowSize = windowSize;
     mSwitch = 0;
-    mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
 }
 
 /**
@@ -38,6 +37,7 @@ void Enemy::setPosition(sf::Vector2f position)
 {
     mEnemySprite.setPosition(position);
     mEnemyShip.setPosition(position);
+    mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
     mStartPosition = position;
 }
 
@@ -57,16 +57,19 @@ void Enemy::moveEnemy()
     {
         mEnemySprite.move(0,1);
         mEnemyShip.move(0,1);
+        mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
     }
     else if(mSwitch%2 == 0)
     {
         mEnemySprite.move(0.5,0);
         mEnemyShip.move(0.5,0);
+        mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
     }
     else if(mSwitch%2 == 1)
     {
         mEnemySprite.move(-0.5,0);
         mEnemyShip.move(-0.5,0); 
+        mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
     }
 }
 
@@ -165,6 +168,8 @@ bool Enemy::checkCollision(Bullet& bullet)
 {
     return mEnemyBoundingBox.intersects(bullet.getBoundingBox());
 }
+
+
 
 
 

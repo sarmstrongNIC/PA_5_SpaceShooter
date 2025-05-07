@@ -55,9 +55,18 @@ void Game::update(sf::RenderWindow &window)
         spawnFighters(window);
         for (int i = 0; i < mFightersRow1.size(); i++)
         {
-            mFightersRow1[i]->moveEnemy();
-            mFightersRow2[i]->moveEnemy();
-            mFightersRow3[i]->moveEnemy();
+            if(mFightersRow1[i] != nullptr)
+            {
+                mFightersRow1[i]->moveEnemy();
+            }
+            if(mFightersRow2[i] != nullptr)
+            {
+                mFightersRow2[i]->moveEnemy();
+            }
+            if(mFightersRow3[i] != nullptr)
+            {
+                mFightersRow3[i]->moveEnemy();
+            }
         }
     }
     if(mPlayerSpaceShip.mLives == 0 && mGameOver == false)
@@ -100,58 +109,55 @@ void Game::update(sf::RenderWindow &window)
  
     for(std::size_t i = 0; i < mPlayerSpaceShip.mBullets.size(); i++)
     {
-        bool enemyHit = mEnemy.checkCollision(mPlayerSpaceShip.mBullets[i]);
-        if(enemyHit)
-        {
-            std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
-            mPlayerSpaceShip.mBullets.pop_back();
-            std::cout << "ENEMY HIT" << std::endl;
-            mScore+=100;
-            std::cout << "Score: " << mScore << std::endl;
-        }
-    }
-    for(std::size_t i = 0; i < mPlayerSpaceShip.mBullets.size(); i++)
-    {
         for(int j = 0; j < mFightersRow1.size(); j++)
         {
-            bool enemyHit = mFightersRow1[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
-            if(enemyHit)
+            if(mFightersRow1[j] != nullptr)
             {
-                std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
-                mPlayerSpaceShip.mBullets.pop_back();
-                std::cout << "ENEMY HIT" << std::endl;
-                mScore+=100;
-                std::cout << "Score: " << mScore << std::endl;
-                delete mFightersRow1[j];
-                mFightersRow1[j] = nullptr;
+                bool enemyHit = mFightersRow1[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
+                if(enemyHit)
+                {
+                    std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
+                    mPlayerSpaceShip.mBullets.pop_back();
+                    std::cout << "ENEMY HIT" << std::endl;
+                    mScore+=100;
+                    std::cout << "Score: " << mScore << std::endl;
+                    delete mFightersRow1[j];
+                    mFightersRow1[j] = nullptr;
+                }
             }
         }
         for(int j = 0; j < mFightersRow2.size(); j++)
         {
-            bool enemyHit = mFightersRow2[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
-            if(enemyHit)
+            if(mFightersRow2[j] != nullptr)
             {
-                std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
-                mPlayerSpaceShip.mBullets.pop_back();
-                std::cout << "ENEMY HIT" << std::endl;
-                mScore+=100;
-                std::cout << "Score: " << mScore << std::endl;
-                delete mFightersRow2[j];
-                mFightersRow2[j] = nullptr;
+                bool enemyHit = mFightersRow2[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
+                if(enemyHit)
+                {
+                    std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
+                    mPlayerSpaceShip.mBullets.pop_back();
+                    std::cout << "ENEMY HIT" << std::endl;
+                    mScore+=100;
+                    std::cout << "Score: " << mScore << std::endl;
+                    delete mFightersRow2[j];
+                    mFightersRow2[j] = nullptr;
+                }
             }
         }
         for(int j = 0; j < mFightersRow3.size(); j++)
         {
-            bool enemyHit = mFightersRow3[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
-            if(enemyHit)
+            if(mFightersRow3[j] != nullptr)
             {
-                std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
-                mPlayerSpaceShip.mBullets.pop_back();
-                std::cout << "ENEMY HIT" << std::endl;
-                mScore+=100;
-                std::cout << "Score: " << mScore << std::endl;
-                delete mFightersRow3[j];
-                mFightersRow3[j] = nullptr;
+                bool enemyHit = mFightersRow3[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
+                if(enemyHit)
+                {
+                    std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
+                    mPlayerSpaceShip.mBullets.pop_back();
+                    std::cout << "ENEMY HIT" << std::endl;
+                    mScore+=100;
+                    std::cout << "Score: " << mScore << std::endl;
+                    delete mFightersRow3[j];
+                    mFightersRow3[j] = nullptr;
+                }
             }
         }
     }
@@ -480,7 +486,7 @@ void Game::checkCollision(std::vector<Enemy*> &FighterRow)
 {
     for(std::size_t i = 0; i < FighterRow.size(); i++)
     {
-        for(std::size_t j = 0; j < FighterRow[i]->enemyBullets.size(); j++)
+        for(std::size_t j = 0; FighterRow[i] != nullptr &&j < FighterRow[i]->enemyBullets.size(); j++)
         {
             if (mShipHit.getElapsedTime() > mShipHitCooldown)
             {
@@ -525,13 +531,13 @@ void Game::randomEnemyShoot() {
             // Filter out nullptrs (destroyed enemies)
             std::vector<Enemy*> validEnemies;
             for (Enemy* enemy : *chosenRow) {
-                if (enemy) validEnemies.push_back(enemy);
+                    if (enemy) validEnemies.push_back(enemy);
             }
 
             // Pick random enemy from that row
             if (!validEnemies.empty()) {
                 int enemyIndex = rand() % validEnemies.size();
-                validEnemies[enemyIndex]->fireBullet();
+                    validEnemies[enemyIndex]->fireBullet();
             }
         }
     
@@ -543,7 +549,10 @@ void Game::drawEnemyShots(std::vector<Enemy*> &FighterRow, sf::RenderWindow &win
 {
     for(std::size_t i = 0; i < FighterRow.size(); i++)
     {
-        FighterRow[i]->drawBullet(window);
+        if(FighterRow[i] != nullptr)
+        {
+            FighterRow[i]->drawBullet(window);
+        }
     }
 }
 

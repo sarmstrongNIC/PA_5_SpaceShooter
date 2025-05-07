@@ -33,6 +33,7 @@ Ship::Ship(const sf::Vector2u &windowsize)
     mWindowSize = windowsize;
     mShipSprite.setOrigin(209.f/2.f, 241.f/2.f);
     mShipSprite.setPosition(320.f, 600.f);
+    mShipSprite.setScale(0.5,0.5);
     mIncrement = 5.0;
     mLives = 3;
     mShipBoundingBox = mShipSprite.getGlobalBounds();
