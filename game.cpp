@@ -50,6 +50,12 @@ void Game::update(sf::RenderWindow &window)
     if(!mGameOver)
     {
         spawnFighters(window);
+        for (int i = 0; i < mFightersRow1.size(); i++)
+        {
+            mFightersRow1[i]->moveEnemy();
+            mFightersRow2[i]->moveEnemy();
+            mFightersRow3[i]->moveEnemy();
+        }
     }
     if(mPlayerSpaceShip.mLives == 0 && mGameOver == false)
     {
@@ -106,6 +112,51 @@ void Game::update(sf::RenderWindow &window)
             std::cout << "ENEMY HIT" << std::endl;
             mScore+=100;
             std::cout << "Score: " << mScore << std::endl;
+        }
+    }
+    for(std::size_t i = 0; i < mPlayerSpaceShip.mBullets.size(); i++)
+    {
+        for(int j = 0; j < mFightersRow1.size(); j++)
+        {
+            bool enemyHit = mFightersRow1[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
+            if(enemyHit)
+            {
+                std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
+                mPlayerSpaceShip.mBullets.pop_back();
+                std::cout << "ENEMY HIT" << std::endl;
+                mScore+=100;
+                std::cout << "Score: " << mScore << std::endl;
+                delete mFightersRow1[j];
+                mFightersRow1[j] = nullptr;
+            }
+        }
+        for(int j = 0; j < mFightersRow2.size(); j++)
+        {
+            bool enemyHit = mFightersRow2[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
+            if(enemyHit)
+            {
+                std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
+                mPlayerSpaceShip.mBullets.pop_back();
+                std::cout << "ENEMY HIT" << std::endl;
+                mScore+=100;
+                std::cout << "Score: " << mScore << std::endl;
+                delete mFightersRow2[j];
+                mFightersRow2[j] = nullptr;
+            }
+        }
+        for(int j = 0; j < mFightersRow3.size(); j++)
+        {
+            bool enemyHit = mFightersRow3[j]->checkCollision(mPlayerSpaceShip.mBullets[i]);
+            if(enemyHit)
+            {
+                std::swap(mPlayerSpaceShip.mBullets[i], mPlayerSpaceShip.mBullets.back());
+                mPlayerSpaceShip.mBullets.pop_back();
+                std::cout << "ENEMY HIT" << std::endl;
+                mScore+=100;
+                std::cout << "Score: " << mScore << std::endl;
+                delete mFightersRow3[j];
+                mFightersRow3[j] = nullptr;
+            }
         }
     }
     mScoreText.setString("Score: " + std::to_string(mScore));
@@ -227,9 +278,9 @@ void Game::spawnFighters(sf::RenderWindow &window) //function to check if all fi
             mFightersRow3.pop_back();
         }
         //spawn new enemy fighters
-        spawnFighterRow(5,sf::Vector2f{80,40},mFightersRow1, window);
-        spawnFighterRow(5,sf::Vector2f{80,120},mFightersRow2, window);
-        spawnFighterRow(5,sf::Vector2f{80,200},mFightersRow3, window);
+        spawnFighterRow(5,sf::Vector2f{120,-260},mFightersRow1, window);
+        spawnFighterRow(5,sf::Vector2f{180,-180},mFightersRow2, window);
+        spawnFighterRow(5,sf::Vector2f{80,-100},mFightersRow3, window);
         mWave =+ 1; //wave increment
     }
 }

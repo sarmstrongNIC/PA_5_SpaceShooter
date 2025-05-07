@@ -13,12 +13,20 @@ class Enemy
     void draw(sf::RenderWindow& window);
     void drawBullet(sf::RenderWindow &window);
     void handleInput();
+    void moveEnemy();
     std::vector<Bullet> enemyBullets;
     bool checkCollision(Bullet& bullet);
-    sf::RectangleShape mEnemySprite;//TODO, create proper sprite
     void setPosition(sf::Vector2f position);
 
     private:
+    void movementSwitch();
+    sf::Texture mEnemyTextureTile;
+    sf::Clock mMovement;
+    sf::Time mMovementSwitch = sf::seconds(2);
+    int mSwitch;
+    sf::Sprite mEnemyShip;
+    sf::Vector2f mStartPosition;
+    sf::RectangleShape mEnemySprite;//TODO, create proper sprite
     sf::FloatRect mEnemyBoundingBox;
     sf::Vector2u mWindowSize;
 

@@ -17,16 +17,57 @@
  */
 Enemy::Enemy(const sf::Vector2u &windowSize)
 {
+    mEnemyTextureTile.loadFromFile("Enemy Ship.png");
+    mEnemyShip.setTexture(mEnemyTextureTile);
+    mEnemyShip.scale(3.5,3.5);
     mEnemySprite.setSize(sf::Vector2f(60.f, 40.f));
-    mEnemySprite.setFillColor(sf::Color::Red);
+    mEnemySprite.setFillColor(sf::Color::Black);
     mEnemySprite.setPosition(windowSize.x / 2.f, 100.f);
+    mEnemyShip.setPosition(windowSize.x / 2.f, 100.f);
     mWindowSize = windowSize;
+    mSwitch = 0;
     mEnemyBoundingBox = mEnemySprite.getGlobalBounds();
 }
 
+/**
+ * @brief sets position and new starting position
+ * 
+ * @param Vector2f position - new position for object
+ */
 void Enemy::setPosition(sf::Vector2f position)
 {
     mEnemySprite.setPosition(position);
+    mEnemyShip.setPosition(position);
+    mStartPosition = position;
+}
+
+void Enemy::movementSwitch()
+{
+    if(mMovement.getElapsedTime() > mMovementSwitch)
+    {
+        mSwitch += 1;
+        mMovement.restart();
+    }
+}
+
+void Enemy::moveEnemy()
+{
+    movementSwitch();
+    if(mEnemySprite.getPosition().y < mStartPosition.y + 300)
+    {
+        mEnemySprite.move(0,1);
+        mEnemyShip.move(0,1);
+    }
+    else if(mSwitch%2 == 0)
+    {
+        mEnemySprite.move(0.5,0);
+        mEnemyShip.move(0.5,0);
+    }
+    else if(mSwitch%2 == 1)
+    {
+        mEnemySprite.move(-0.5,0);
+        mEnemyShip.move(-0.5,0); 
+    }
 }
 
 /**
@@ -65,6 +106,7 @@ void Enemy::handleInput()
 void Enemy::draw(sf::RenderWindow& window)
 {
     window.draw(mEnemySprite);
+    window.draw(mEnemyShip);
 }
 
 /**
