@@ -27,6 +27,7 @@ Game::Game(sf::RenderWindow &window) : mPlayerSpaceShip(window.getSize()), mEnem
     mGameOver = false;
     mRespawning = false;
     mPlayAgain = true;
+    
 }
 
 void Game::handleInput(sf::RenderWindow &window)
@@ -80,62 +81,23 @@ void Game::update(sf::RenderWindow &window)
         }
     }
     
-
-    for(std::size_t i = 0; i < mFightersRow3.size(); i++)
+    // mFightersRow3[0]->drawBullet(window);
+    // mFightersRow3[0]->handleInput();
+    if(!mGameOver)
     {
-        for(std::size_t j = 0; j < mFightersRow3[i]->enemyBullets.size(); j++)
-        {
-            if (mShipHit.getElapsedTime() > mShipHitCooldown)
-            {
-                mRespawning = false;
-            }
-            if(!mRespawning)
-            {
-                bool userHit = mPlayerSpaceShip.checkCollision(mFightersRow3[i]->enemyBullets[j]);
-                if(userHit)
-                {
-
-                    std::swap(mFightersRow3[i]->enemyBullets[j], mFightersRow3[i]->enemyBullets.back());
-                    mFightersRow3[i]->enemyBullets.pop_back();
-                    if(mPlayerSpaceShip.mLives > 0)
-                    {
-                        mPlayerSpaceShip.mLives--;
-                    }
-                    std::cout << "SPACESHIP HIT" << std::endl;
-                    std::cout << mPlayerSpaceShip.mLives << " Lives Remaining" << std::endl;
-                    mRespawning = true;
-                    mShipHit.restart();
-                }   
-            }
-        }
+        randomEnemyShoot();
     }
 
-    // for(std::size_t i = 0; i < mEnemy.enemyBullets.size(); i++)
-    // {            
-    //     //ship not affected by bullets for cooldown period after hit
-    //     if (mShipHit.getElapsedTime() > mShipHitCooldown)
-    //     {
-    //         mRespawning = false;
-    //     }
-    //     if(!mRespawning)
-    //     {
-    //         bool userHit = mPlayerSpaceShip.checkCollision(mEnemy.enemyBullets[i]);
-    //         if(userHit)
-    //         {
 
-    //             std::swap(mEnemy.enemyBullets[i], mEnemy.enemyBullets.back());
-    //             mEnemy.enemyBullets.pop_back();
-    //             if(mPlayerSpaceShip.mLives > 0)
-    //             {
-    //                 mPlayerSpaceShip.mLives--;
-    //             }
-    //             std::cout << "SPACESHIP HIT" << std::endl;
-    //             std::cout << mPlayerSpaceShip.mLives << " Lives Remaining" << std::endl;
-    //             mRespawning = true;
-    //             mShipHit.restart();
-    //         }   
-    //     }
-    // }
+    //loop through each row
+        //use random number to select row
+    //generate random number
+    //have that enemy fire a bullet
+
+    checkCollision(mFightersRow3);
+    checkCollision(mFightersRow2);
+    checkCollision(mFightersRow1);
+ 
     for(std::size_t i = 0; i < mPlayerSpaceShip.mBullets.size(); i++)
     {
         bool enemyHit = mEnemy.checkCollision(mPlayerSpaceShip.mBullets[i]);
@@ -255,11 +217,7 @@ void Game::update(sf::RenderWindow &window)
 void Game::render(sf::RenderWindow &window)
 {
     window.clear(sf::Color::Black);
-    // for(int i = 0; i < 1; i++)
-    // {
-    //     mFightersRow1[i]->draw(window);
-    //     mFightersRow1[i]->drawBullet(window);
-    // }
+
     // mEnemy.draw(window);
     // mEnemy.drawBullet(window);
 
@@ -267,9 +225,10 @@ void Game::render(sf::RenderWindow &window)
     mPlayerSpaceShip.drawBullet(window);
     drawFighters(window);
 
-    mFightersRow3[3]->drawBullet(window);
-    mFightersRow3[3]->handleInput();
-
+    //mFightersRow3[0]->drawBullet(window);
+    drawEnemyShots(mFightersRow3, window);
+    drawEnemyShots(mFightersRow2, window);
+    drawEnemyShots(mFightersRow1, window);
 
     window.draw(mLivesText);
     window.draw(mScoreText);
@@ -515,3 +474,77 @@ bool Game::displayInstructions(sf::RenderWindow &window)
     }
     return -1;
 }
+
+
+void Game::checkCollision(std::vector<Enemy*> &FighterRow)
+{
+    for(std::size_t i = 0; i < FighterRow.size(); i++)
+    {
+        for(std::size_t j = 0; j < FighterRow[i]->enemyBullets.size(); j++)
+        {
+            if (mShipHit.getElapsedTime() > mShipHitCooldown)
+            {
+                mRespawning = false;
+            }
+            if(!mRespawning)
+            {
+                bool userHit = mPlayerSpaceShip.checkCollision(FighterRow[i]->enemyBullets[j]);
+                if(userHit)
+                {
+
+                    std::swap(FighterRow[i]->enemyBullets[j], FighterRow[i]->enemyBullets.back());
+                    FighterRow[i]->enemyBullets.pop_back();
+                    if(mPlayerSpaceShip.mLives > 0)
+                    {
+                        mPlayerSpaceShip.mLives--;
+                    }
+                    std::cout << "SPACESHIP HIT" << std::endl;
+                    std::cout << mPlayerSpaceShip.mLives << " Lives Remaining" << std::endl;
+                    mRespawning = true;
+                    mShipHit.restart();
+                }   
+            }
+        }
+    }
+}
+
+void Game::randomEnemyShoot() {
+    if (mEnemyFireClock.getElapsedTime().asSeconds() >= 1.0f) {
+        std::vector<std::vector<Enemy*>*> rows;
+
+        // Add only non-empty rows
+        if (!mFightersRow1.empty()) rows.push_back(&mFightersRow1);
+        if (!mFightersRow2.empty()) rows.push_back(&mFightersRow2);
+        if (!mFightersRow3.empty()) rows.push_back(&mFightersRow3);
+
+        if (!rows.empty()) {
+            // Pick random row
+            int rowIndex = rand() % rows.size();
+            std::vector<Enemy*>* chosenRow = rows[rowIndex];
+
+            // Filter out nullptrs (destroyed enemies)
+            std::vector<Enemy*> validEnemies;
+            for (Enemy* enemy : *chosenRow) {
+                if (enemy) validEnemies.push_back(enemy);
+            }
+
+            // Pick random enemy from that row
+            if (!validEnemies.empty()) {
+                int enemyIndex = rand() % validEnemies.size();
+                validEnemies[enemyIndex]->fireBullet();
+            }
+        }
+    
+        mEnemyFireClock.restart();
+    }
+}
+
+void Game::drawEnemyShots(std::vector<Enemy*> &FighterRow, sf::RenderWindow &window)
+{
+    for(std::size_t i = 0; i < FighterRow.size(); i++)
+    {
+        FighterRow[i]->drawBullet(window);
+    }
+}
+
+
