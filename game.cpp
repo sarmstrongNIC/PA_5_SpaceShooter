@@ -179,6 +179,7 @@ void Game::render(sf::RenderWindow &window)
     // mEnemy.drawBullet(window);
     mPlayerSpaceShip.draw(window);
     mPlayerSpaceShip.drawBullet(window);
+    drawFighters(window);
     window.draw(mLivesText);
     window.draw(mScoreText);
     if(mGameOver)
