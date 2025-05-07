@@ -17,6 +17,7 @@
  */
 Enemy::Enemy(const sf::Vector2u &windowSize)
 {
+    std::cout << "Enemy constructor called" << std::endl;
     mEnemySprite.setSize(sf::Vector2f(60.f, 40.f));
     mEnemySprite.setFillColor(sf::Color::Red);
     mEnemySprite.setPosition(windowSize.x / 2.f, 100.f);

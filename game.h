@@ -24,11 +24,15 @@ public:
     bool displayInstructions(sf::RenderWindow &window);
     int getSelectedMenuItem();
     void setGameDone();
+    void checkCollision(std::vector<Enemy*> &FighterRow);
+    void randomEnemyShoot();
+    void drawEnemyShots(std::vector<Enemy*> &FighterRow, sf::RenderWindow &window);
     bool returnMainMenu = false;
     sf::Font mFont;
     sf::Text mLivesText;
     sf::Text mGameOverText;
     sf::Text mScoreText;
+    sf::Clock mEnemyFireClock;
     MainMenu mMenu;
 
 private:
