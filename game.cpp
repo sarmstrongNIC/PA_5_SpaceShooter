@@ -42,7 +42,9 @@ void Game::handleInput(sf::RenderWindow &window)
     }
     mPlayerSpaceShip.moveShip();
     mPlayerSpaceShip.handleInput();
-    mEnemy.handleInput();
+    //mEnemy.handleInput();
+    
+
 }
 
 void Game::update(sf::RenderWindow &window)
@@ -71,31 +73,63 @@ void Game::update(sf::RenderWindow &window)
             mGameOverText.setString("GAME OVER");
         }
     }
-    for(std::size_t i = 0; i < mEnemy.enemyBullets.size(); i++)
-    {            
-        //ship not affected by bullets for cooldown period after hit
-        if (mShipHit.getElapsedTime() > mShipHitCooldown)
+    
+
+    for(std::size_t i = 0; i < mFightersRow3.size(); i++)
+    {
+        for(std::size_t j = 0; j < mFightersRow3[i]->enemyBullets.size(); j++)
         {
-            mRespawning = false;
-        }
-        if(!mRespawning)
-        {
-            bool userHit = mPlayerSpaceShip.checkCollision(mEnemy.enemyBullets[i]);
-            if(userHit)
+            if (mShipHit.getElapsedTime() > mShipHitCooldown)
             {
-                std::swap(mEnemy.enemyBullets[i], mEnemy.enemyBullets.back());
-                mEnemy.enemyBullets.pop_back();
-                if(mPlayerSpaceShip.mLives > 0)
+                mRespawning = false;
+            }
+            if(!mRespawning)
+            {
+                bool userHit = mPlayerSpaceShip.checkCollision(mFightersRow3[i]->enemyBullets[j]);
+                if(userHit)
                 {
-                    mPlayerSpaceShip.mLives--;
-                }
-                std::cout << "SPACESHIP HIT" << std::endl;
-                std::cout << mPlayerSpaceShip.mLives << " Lives Remaining" << std::endl;
-                mRespawning = true;
-                mShipHit.restart();
-            }   
+
+                    std::swap(mFightersRow3[i]->enemyBullets[j], mFightersRow3[i]->enemyBullets.back());
+                    mFightersRow3[i]->enemyBullets.pop_back();
+                    if(mPlayerSpaceShip.mLives > 0)
+                    {
+                        mPlayerSpaceShip.mLives--;
+                    }
+                    std::cout << "SPACESHIP HIT" << std::endl;
+                    std::cout << mPlayerSpaceShip.mLives << " Lives Remaining" << std::endl;
+                    mRespawning = true;
+                    mShipHit.restart();
+                }   
+            }
         }
     }
+
+    // for(std::size_t i = 0; i < mEnemy.enemyBullets.size(); i++)
+    // {            
+    //     //ship not affected by bullets for cooldown period after hit
+    //     if (mShipHit.getElapsedTime() > mShipHitCooldown)
+    //     {
+    //         mRespawning = false;
+    //     }
+    //     if(!mRespawning)
+    //     {
+    //         bool userHit = mPlayerSpaceShip.checkCollision(mEnemy.enemyBullets[i]);
+    //         if(userHit)
+    //         {
+
+    //             std::swap(mEnemy.enemyBullets[i], mEnemy.enemyBullets.back());
+    //             mEnemy.enemyBullets.pop_back();
+    //             if(mPlayerSpaceShip.mLives > 0)
+    //             {
+    //                 mPlayerSpaceShip.mLives--;
+    //             }
+    //             std::cout << "SPACESHIP HIT" << std::endl;
+    //             std::cout << mPlayerSpaceShip.mLives << " Lives Remaining" << std::endl;
+    //             mRespawning = true;
+    //             mShipHit.restart();
+    //         }   
+    //     }
+    // }
     for(std::size_t i = 0; i < mPlayerSpaceShip.mBullets.size(); i++)
     {
         bool enemyHit = mEnemy.checkCollision(mPlayerSpaceShip.mBullets[i]);
@@ -177,9 +211,15 @@ void Game::render(sf::RenderWindow &window)
     // }
     // mEnemy.draw(window);
     // mEnemy.drawBullet(window);
+
     mPlayerSpaceShip.draw(window);
     mPlayerSpaceShip.drawBullet(window);
     drawFighters(window);
+
+    mFightersRow3[3]->drawBullet(window);
+    mFightersRow3[3]->handleInput();
+
+
     window.draw(mLivesText);
     window.draw(mScoreText);
     if(mGameOver)

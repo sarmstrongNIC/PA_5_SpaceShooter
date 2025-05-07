@@ -67,7 +67,8 @@ int main()
 
 
 //Sam Next:
-    //Bug -- window X at main menu doesn't close program
+    //Have one of the existing enemies shoot at user at some interval
+    
     //capture high score
     //
 

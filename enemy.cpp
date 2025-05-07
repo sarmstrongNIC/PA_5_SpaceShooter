@@ -35,6 +35,7 @@ void Enemy::setPosition(sf::Vector2f position)
  */
 void Enemy::fireBullet()
 {
+    std::cout << "fireBullet called " << std::endl;
     Bullet newBullet(mEnemySprite.getPosition(),true);
     enemyBullets.push_back(newBullet);
 }
@@ -48,11 +49,33 @@ void Enemy::handleInput()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) 
     {
         fireBullet();
+        // std::cout << "Enemy bullets in air: " << enemyBullets.size() << "\n";
+        
+        // for (std::size_t i = 0; i < enemyBullets.size(); ++i) {
+        //     sf::FloatRect bounds = enemyBullets[i].getBoundingBox();
+        //     std::cout << "Bullet " << i << ": x = " 
+        //               << enemyBullets[i].getPosition().x << ", y = "
+        //               << enemyBullets[i].getPosition().y << " | Bounds: left = " << bounds.left 
+        //               << ", top = " << bounds.top 
+        //               << ", width = " << bounds.width 
+        //               << ", height = " << bounds.height << "\n";
+            
+        //}
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) 
+    {
+        //fireBullet();
         std::cout << "Enemy bullets in air: " << enemyBullets.size() << "\n";
+        
         for (std::size_t i = 0; i < enemyBullets.size(); ++i) {
+            sf::FloatRect bounds = enemyBullets[i].getBoundingBox();
             std::cout << "Bullet " << i << ": x = " 
                       << enemyBullets[i].getPosition().x << ", y = "
-                      << enemyBullets[i].getPosition().y << "\n";
+                      << enemyBullets[i].getPosition().y << " | Bounds: left = " << bounds.left 
+                      << ", top = " << bounds.top 
+                      << ", width = " << bounds.width 
+                      << ", height = " << bounds.height << "\n";
+            
         }
     }
 }
